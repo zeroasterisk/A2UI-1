@@ -28,6 +28,6 @@ export const TextVariant: StoryObj = {
 export const IconButton: StoryObj = {
   render: () => renderA2UI(simpleComponent("btn-icon", [
     { id: "btn", component: { Button: { child: "ico", variant: "icon", action: { name: "click" } } } },
-    { id: "ico", component: { Icon: { name: "favorite" } } },
+    { id: "ico", component: { Icon: { name: { literalString: "favorite" } } } },
   ])),
 };

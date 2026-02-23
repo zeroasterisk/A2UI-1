@@ -6,10 +6,10 @@ export default meta;
 
 export const Basic: StoryObj = {
   render: () => renderA2UI(simpleComponent("modal-basic", [
-    { id: "modal1", component: "Modal", child: "content", title: "Modal Title" },
-    { id: "content", component: "Column", children: ["t1", "btn1"] },
-    { id: "t1", component: "Text", text: "This is modal content.", variant: "body" },
-    { id: "btn1", component: "Button", child: "btn_text", variant: "primary", action: { event: { name: "close" } } },
-    { id: "btn_text", component: "Text", text: "Close" },
+    { id: "modal1", component: { Modal: {
+      child: "modal-content",
+      title: { literalString: "Dialog Title" },
+    }}},
+    { id: "modal-content", component: { Text: { text: { literalString: "This is modal content. Click the entry point to open." } } } },
   ])),
 };

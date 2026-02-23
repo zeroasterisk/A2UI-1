@@ -65,21 +65,45 @@ function translateComponents(components: any[]): any[] {
     // Rename ChoicePicker → MultipleChoice
     const componentType = component === "ChoicePicker" ? "MultipleChoice" : component;
     
-    // Property renames: v0.10 → v0.8
-    const RENAMES: Record<string, string> = {
-      variant: "usageHint",
+    // Property renames: v0.10 → v0.8 (component-specific)
+    const RENAMES: Record<string, Record<string, string>> = {
+      Text: { variant: "usageHint" },
     };
+    const renames = RENAMES[componentType] || {};
     // Wrap string values in literalString for text-like properties
     const translatedProps: any = {};
     for (const [key, value] of Object.entries(props)) {
-      const k = RENAMES[key] || key;
-      if ((k === "text" || k === "label" || k === "hint") && typeof value === "string") {
+      const k = renames[key] || key;
+      const STRING_PROPS = new Set(["text", "label", "hint", "name", "url", "src", "title", "placeholder", "description"]);
+      if (STRING_PROPS.has(k) && typeof value === "string") {
         translatedProps[k] = { literalString: value };
       } else {
         translatedProps[k] = value;
       }
     }
     
+    // Component-specific translations
+    if (componentType === "Tabs" && translatedProps.tabs && Array.isArray(translatedProps.tabs)) {
+      translatedProps.tabItems = translatedProps.tabs.map((t: any) => ({
+        title: typeof t.label === "string" ? { literalString: t.label } : (typeof t.title === "string" ? { literalString: t.title } : t.title || t.label),
+        child: t.child,
+      }));
+      delete translatedProps.tabs;
+    }
+    if (componentType === "MultipleChoice") {
+      if (translatedProps.options && Array.isArray(translatedProps.options)) {
+        translatedProps.options = translatedProps.options.map((o: any) => ({
+          ...o,
+          label: typeof o.label === "string" ? { literalString: o.label } : o.label,
+        }));
+      }
+      if (translatedProps.value && !translatedProps.selections) {
+        translatedProps.selections = translatedProps.value;
+        delete translatedProps.value;
+      }
+      if (!translatedProps.selections) translatedProps.selections = [];
+    }
+
     const result: any = {
       id,
       component: { [componentType]: translatedProps },
