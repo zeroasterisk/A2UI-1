@@ -85,4 +85,4 @@ python3 -m http.server 8080
 - **Three connection methods** as equal-weight buttons rather than a dropdown — mobile-friendly, reduces taps
 - **Context preservation** in a nested card — visually grouped, clearly "what the AI tried"
 - **Single event name** (`a2h.escalate.connect`) with `method` in context — cleaner than three separate events
-- **Priority as caption variant** — inherits red color from CSS, visually prominent without a separate component
+- **Priority as warning icon + caption text** — icon inherits red color, emoji in data model reinforces urgency

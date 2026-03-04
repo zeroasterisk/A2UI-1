@@ -40,7 +40,7 @@
         {
           "id": "header-icon",
           "component": "Icon",
-          "name": "support_agent"
+          "name": "person"
         },
         {
           "id": "header-text",
@@ -78,7 +78,7 @@
           "id": "context-header",
           "component": "Text",
           "text": "Conversation Summary",
-          "variant": "label"
+          "variant": "caption"
         },
         {
           "id": "context-tried-row",
@@ -89,7 +89,7 @@
           "id": "context-tried-label",
           "component": "Text",
           "text": "Attempted:",
-          "variant": "label"
+          "variant": "caption"
         },
         {
           "id": "context-tried-value",
@@ -106,7 +106,7 @@
           "id": "context-issue-label",
           "component": "Text",
           "text": "Issue:",
-          "variant": "label"
+          "variant": "caption"
         },
         {
           "id": "context-issue-value",
@@ -123,7 +123,7 @@
           "id": "context-duration-label",
           "component": "Text",
           "text": "Duration:",
-          "variant": "label"
+          "variant": "caption"
         },
         {
           "id": "context-duration-value",
@@ -140,7 +140,7 @@
           "id": "context-agent-label",
           "component": "Text",
           "text": "AI Agent:",
-          "variant": "label"
+          "variant": "caption"
         },
         {
           "id": "context-agent-value",
@@ -157,7 +157,7 @@
         {
           "id": "priority-icon",
           "component": "Icon",
-          "name": "priority_high"
+          "name": "warning"
         },
         {
           "id": "priority-text",
