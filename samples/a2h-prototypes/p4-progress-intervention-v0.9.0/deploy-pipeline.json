@@ -68,7 +68,6 @@
 
   {
     "version": "v0.9",
-    "_comment": "Step 2: Build complete, Test running",
     "updateDataModel": {
       "surfaceId": "a2h-inform-deploy-pipeline-001",
       "value": {
@@ -102,7 +101,6 @@
 
   {
     "version": "v0.9",
-    "_comment": "Step 3: Test complete, Stage running",
     "updateDataModel": {
       "surfaceId": "a2h-inform-deploy-pipeline-001",
       "value": {
@@ -136,7 +134,6 @@
 
   {
     "version": "v0.9",
-    "_comment": "Step 4: Stage complete, Deploy PAUSED for approval",
     "updateDataModel": {
       "surfaceId": "a2h-inform-deploy-pipeline-001",
       "value": {

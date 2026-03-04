@@ -154,20 +154,23 @@
       el.appendChild(render('root'));
     }
 
-    const delays = [0, 2000, 2500, 3000];
+    // 9 messages: [createSurface, dataModel, components, dataModel, components, dataModel, components, dataModel, components]
+    // Grouped as: init(0-2), step2(3-4), step3(5-6), step4(7-8)
+    const delays = [0, 0, 500, 2000, 200, 2500, 200, 3000, 200];
     const statusEl = document.getElementById('status');
     const labels = [
       'Pipeline started — building…',
-      'Build complete — running tests…',
-      'Tests passed — staging…',
-      'Staged — awaiting deploy approval'
+      '', '',
+      'Build complete — running tests…', '',
+      'Tests passed — staging…', '',
+      'Staged — awaiting deploy approval', ''
     ];
 
     for (let i = 0; i < messages.length; i++) {
       await new Promise(r => setTimeout(r, delays[i] || 0));
       applyMessage(messages[i]);
       rerender();
-      statusEl.textContent = labels[i] || '';
+      if (labels[i]) statusEl.textContent = labels[i];
     }
   </script>
 </body>

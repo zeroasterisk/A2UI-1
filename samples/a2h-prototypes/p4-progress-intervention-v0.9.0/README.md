@@ -11,12 +11,14 @@ The two A2H interaction types used:
 
 ## How It Works
 
-### Message Sequence (4 messages in `deploy-pipeline.json`)
+### Message Sequence (9 messages in `deploy-pipeline.json`)
 
-1. **createSurface + initial state** — Pipeline header, app info, four steps all pending (Build ⏳, rest ⬜)
-2. **updateComponents** — Build ✅ complete (1m 12s), Test ⏳ running
-3. **updateComponents** — Test ✅ passed (48/48), Stage ⏳ running
-4. **updateComponents** — Stage ✅ live, Deploy ⏸️ paused. Approval card injected into the tree by updating `main-col.children` to include `approve-card`.
+The file contains 9 A2UI messages grouped into 4 logical steps. Each step (after the first) sends an `updateDataModel` followed by an `updateComponents`:
+
+1. **Messages 0–2: Initial state** — `createSurface`, `updateDataModel` (pipeline metadata), `updateComponents` (header, app info, four steps — Build ⏳, rest ⬜)
+2. **Messages 3–4: Build complete** — `updateDataModel` (build done), `updateComponents` (Build ✅ 1m 12s, Test ⏳ running)
+3. **Messages 5–6: Test complete** — `updateDataModel` (test done), `updateComponents` (Test ✅ 48/48, Stage ⏳ running)
+4. **Messages 7–8: Stage complete, deploy paused** — `updateDataModel` (stage done, deploy paused), `updateComponents` (Stage ✅ live, Deploy ⏸️ paused, approval card injected via `main-col.children` update)
 
 ### Key Techniques
 
@@ -41,6 +43,6 @@ Replays the 4 messages with 2–3 second delays between steps, simulating real-t
 
 ## Files
 
-- `deploy-pipeline.json` — A2UI v0.9 message sequence (4 messages)
+- `deploy-pipeline.json` — A2UI v0.9 message sequence (9 messages, 4 logical steps)
 - `index.html` — Standalone renderer with replay simulation
 - `README.md` — This file
