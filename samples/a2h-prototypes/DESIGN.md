@@ -385,6 +385,104 @@ A four-step wizard on a single persistent surface. Step 1 collects expense basic
 
 ---
 
+## Before & After: v0.9.0 vs v0.9.1
+
+We rebuilt all five prototypes using the proposed v0.9.1 features (`visible` binding, Button `label`, `ProgressIndicator`, `KeyValue`). Here's what changed — measured from the actual JSON files.
+
+### Summary Table
+
+| Prototype | v0.9.0 Msgs | v0.9.1 Msgs | v0.9.0 Components | v0.9.1 Components | v0.9.0 JSON Lines | v0.9.1 JSON Lines | Reduction |
+|-----------|:-----------:|:-----------:|:------------------:|:------------------:|:------------------:|:------------------:|:---------:|
+| P1 Approval | 3 | 3 | 28 | 21 | 223 | 192 | 14% lines, 25% components |
+| P2 Escalation | 3 | 3 | 36 | 28 | 290 | 253 | 13% lines, 22% components |
+| P3 Guided Input | 3 | 3 | 21 | 48 | 168 | 354 | +110%¹ (4 states vs 1) |
+| P4 Pipeline | 9 | 6 | 45 | 32 | 180 | 162 | 10% lines, 29% components, 33% msgs |
+| P5 Wizard | 6 | 3 | 82 | 59 | 210 | 141 | 33% lines, 28% components, 50% msgs |
+
+¹ P3 v0.9.1 is intentionally larger — it defines 4 complete UI states (edit → review → processing → success) in a single component tree, where v0.9.0 only defines the editing state. Per-state, v0.9.1 is more efficient.
+
+### Per-Prototype Breakdown
+
+#### P1: Approval Card (AUTHORIZE)
+
+**Demonstrates:** Financial transfer approval with detail display and approve/reject buttons.
+
+**v0.9.1 features used:** KeyValue (4 detail rows → 4 components instead of 12), Button `label` (2 buttons lose their Text children), `visible` binding (post-approval state change is a data model update, not a tree swap), ProgressIndicator (processing spinner).
+
+**Key improvement:** Post-action state transitions go from "send a full `updateComponents` replacing the button row" to "send `updateDataModel` with `state: processing`". The entire post-approval flow is zero component tree surgery.
+
+**Remaining gaps:** No TTL countdown timer. No mechanism for cryptographic evidence (passkey/OTP) — properly an A2H gateway concern.
+
+#### P2: Escalation Handoff (ESCALATE)
+
+**Demonstrates:** Customer service handoff with context preservation and multiple connection options.
+
+**v0.9.1 features used:** KeyValue (4 context rows), Button `label` (3 buttons), `visible` binding (connecting state), ProgressIndicator (connecting spinner).
+
+**Key improvement:** Same pattern as P1 — the "Connecting you to an agent..." state transition is a single data model update. The 3 connection buttons hide and the spinner appears without touching the component tree.
+
+**Remaining gaps:** No real-time queue position or ETA. Would benefit from a `Timer` or `Countdown` component for wait time estimates.
+
+#### P3: Guided Input Form (COLLECT)
+
+**Demonstrates:** Shipping address form with validation, pre-populated values, and a review-before-submit flow.
+
+**v0.9.1 features used:** `visible` binding (4 mutually exclusive states: edit → review → processing → success), KeyValue (7 review summary rows), Button `label` (4 buttons), ProgressIndicator (submit spinner).
+
+**Key improvement:** The review-before-submit pattern is impossible in v0.9.0 without server round-trips. v0.9.1 declares all 4 states upfront; transitions are purely client-side via data model. The review step alone saves 14 components (7 × KeyValue vs 7 × Row+Text+Text).
+
+**Remaining gaps:** The v0.9.1 file is larger overall because it declares all states upfront. This is the correct trade-off (fewer round-trips, declarative UI), but it means the initial payload is bigger. A `Stepper` or `Wizard` meta-component could reduce this further.
+
+#### P4: Deploy Pipeline (INFORM → AUTHORIZE)
+
+**Demonstrates:** Progressive deployment pipeline with real-time status updates and an approval gate.
+
+**v0.9.1 features used:** ProgressIndicator (native step status instead of emoji ⬜⏳✅), `visible` binding (approval card hidden until deploy step), KeyValue (deployment metadata), Button `label` (approve/rollback buttons).
+
+**Key improvement:** The most dramatic change — **zero `updateComponents` messages after initial setup**. v0.9.0 needed 4 `updateComponents` (one per step transition, plus injecting the approval card). v0.9.1 drives everything through `updateDataModel`. This is the difference between imperative and declarative UI.
+
+**Remaining gaps:** No determinate progress bar (ProgressIndicator `mode: "determinate"` with `value` binding would be ideal). Step timing/duration isn't tracked.
+
+#### P5: Expense Report Wizard (COLLECT → COLLECT → INFORM → AUTHORIZE)
+
+**Demonstrates:** Multi-step wizard chaining 4 A2H intents on a single persistent surface.
+
+**v0.9.1 features used:** `visible` binding (5 step containers + processing state), KeyValue (7 review rows in step 3, plus step 4 summary), Button `label` (6 buttons), ProgressIndicator (submit processing).
+
+**Key improvement:** 50% fewer messages (6 → 3). All step navigation is pure data model updates — `currentStep: 2` shows step 2, hides step 1. Back navigation is instant (no message replay). The review step drops from 21 components to 7.
+
+**Remaining gaps:** Step indicator ("Step 1 of 4") is still plain text — a dedicated `Stepper` component would add affordance. No form-level cross-step validation. The initial tree is large since all steps are declared upfront.
+
+### Recurring Patterns
+
+These issues appeared across multiple prototypes during development:
+
+1. **`variant: "label"` bug.** Several prototypes tried `variant: "label"` on Text components, which isn't a valid variant in the spec (valid values: `headline`, `title`, `body`, `caption`). This suggests the variant enum may need expansion, or that KeyValue's `label` sub-rendering should handle this case.
+
+2. **`MultipleChoice` vs `ChoicePicker` naming confusion.** Prototype authors (including LLMs generating A2UI) frequently reach for `MultipleChoice` — a component that doesn't exist. The actual component is `ChoicePicker`. This naming friction is worth a spec discussion.
+
+3. **`visible` binding is the single biggest improvement.** It transforms every prototype. P1 and P2 get cleaner state transitions. P3 gets a review-before-submit flow that's impossible in v0.9.0. P4 eliminates all mid-flow `updateComponents`. P5 cuts messages in half. If only one enhancement ships, it should be this one.
+
+4. **Button `label` is the biggest DX win per effort.** It's a tiny spec change (one optional string prop) that eliminates 2 components and 2 IDs per button across every single prototype. The cumulative reduction is significant: P5 alone saves 6 components. It also makes LLM-generated A2UI more reliable — fewer IDs to manage means fewer wiring mistakes.
+
+### Lessons for the Spec Team
+
+Based on building 10 prototypes (5 × 2 versions) with real JSON:
+
+1. **Ship `visible` binding first.** It's the only enhancement that changes the architectural model (imperative → declarative). Everything else is a convenience; this is a capability. Without it, every state transition requires a server round-trip and a full component tree replacement. With it, agents can declare complete interaction flows upfront and drive them through data alone.
+
+2. **Button `label` is free money.** Tiny spec change, universal impact, zero controversy. Every prototype benefits. Every LLM generating A2UI benefits more. Ship it alongside `visible`.
+
+3. **KeyValue matters most for review/summary UIs.** It's a 3:1 component reduction for detail displays. The prototypes that benefit most are P1 (approval details), P3 (review summary), and P5 (review step). If you have detail-heavy UIs, this is high-value.
+
+4. **ProgressIndicator fills a real gap, but it's lower priority.** Every prototype that fakes loading state with emoji (⏳) or text ("Processing...") would benefit. But the workarounds are tolerable. Ship it third.
+
+5. **Consider the initial payload trade-off.** The `visible` binding pattern front-loads complexity — all states are declared in the initial tree. P3 goes from 168 to 354 JSON lines. This is the right trade-off (fewer round-trips, declarative), but the spec should document this pattern explicitly so developers don't think bigger JSON = worse.
+
+6. **Naming matters.** `ChoicePicker` vs `MultipleChoice` confusion is real. The spec should consider aliasing or at minimum a prominent note. Similarly, Text `variant` values need documentation or expansion — `"label"` is what people reach for instinctively.
+
+---
+
 ## Recommendation
 
 ### Phase 1: Conventions (now)

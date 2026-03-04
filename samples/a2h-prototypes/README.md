@@ -24,14 +24,29 @@ Comparing the two versions side-by-side makes the case for each proposed enhance
 
 | Path | Description |
 |------|-------------|
-| [DESIGN.md](./DESIGN.md) | Full design document — intent mapping, conventions, proposed enhancements |
+| [DESIGN.md](./DESIGN.md) | Full design document — intent mapping, conventions, v0.9.0 vs v0.9.1 comparison |
 | [demo/](./demo/) | **All 5 intents on one page**, generated via the helper library |
 | [lib/a2h-a2ui.js](./lib/a2h-a2ui.js) | Helper library — generates A2UI v0.9 messages from A2H intent descriptions |
-| [p1-approval-v0.9.0/](./p1-approval-v0.9.0/) | **AUTHORIZE** — Financial transfer approval card |
-| [p2-escalation-v0.9.0/](./p2-escalation-v0.9.0/) | **ESCALATE** — Customer service handoff |
-| [p3-guided-input-v0.9.0/](./p3-guided-input-v0.9.0/) | **COLLECT** — Shipping address form (⭐ cleanest prototype) |
-| [p4-progress-intervention-v0.9.0/](./p4-progress-intervention-v0.9.0/) | **INFORM → AUTHORIZE** — Deploy pipeline with progressive updates |
-| [p5-wizard-v0.9.0/](./p5-wizard-v0.9.0/) | **COLLECT → COLLECT → INFORM → AUTHORIZE** — Expense report wizard |
+
+### v0.9.0 Prototypes (current spec)
+
+| Path | Intent | Description |
+|------|--------|-------------|
+| [p1-approval-v0.9.0/](./p1-approval-v0.9.0/) | AUTHORIZE | Financial transfer approval card |
+| [p2-escalation-v0.9.0/](./p2-escalation-v0.9.0/) | ESCALATE | Customer service handoff |
+| [p3-guided-input-v0.9.0/](./p3-guided-input-v0.9.0/) | COLLECT | Shipping address form (⭐ cleanest prototype) |
+| [p4-progress-intervention-v0.9.0/](./p4-progress-intervention-v0.9.0/) | INFORM → AUTHORIZE | Deploy pipeline with progressive updates |
+| [p5-wizard-v0.9.0/](./p5-wizard-v0.9.0/) | COLLECT×2 → INFORM → AUTHORIZE | Expense report wizard |
+
+### v0.9.1 Prototypes (proposed enhancements)
+
+| Path | Intent | Description |
+|------|--------|-------------|
+| [p1-approval-v0.9.1-with-helper/](./p1-approval-v0.9.1-with-helper/) | AUTHORIZE | Same approval card — 25% fewer components |
+| [p2-escalation-v0.9.1-with-helper/](./p2-escalation-v0.9.1-with-helper/) | ESCALATE | Same escalation — 22% fewer components |
+| [p3-guided-input-v0.9.1-with-helper/](./p3-guided-input-v0.9.1-with-helper/) | COLLECT | Same form + review-before-submit flow (4 states) |
+| [p4-progress-intervention-v0.9.1-with-helper/](./p4-progress-intervention-v0.9.1-with-helper/) | INFORM → AUTHORIZE | Same pipeline — zero mid-flow updateComponents |
+| [p5-wizard-v0.9.1-with-helper/](./p5-wizard-v0.9.1-with-helper/) | COLLECT×2 → INFORM → AUTHORIZE | Same wizard — 50% fewer messages |
 
 ## Helper Library API
 
