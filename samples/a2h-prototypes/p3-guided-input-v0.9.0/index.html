@@ -62,13 +62,13 @@
     }
     .c-TextField input:focus { border-color: #1a73e8; }
 
-    .c-MultipleChoice {
+    .c-ChoicePicker {
       display: flex;
       flex-direction: row;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .c-MultipleChoice .choice-chip {
+    .c-ChoicePicker .choice-chip {
       border: 1px solid #dadce0;
       border-radius: 20px;
       padding: 0.45rem 1rem;
@@ -79,8 +79,8 @@
       color: #202124;
       transition: all 0.15s;
     }
-    .c-MultipleChoice .choice-chip:hover { background: #f1f3f4; }
-    .c-MultipleChoice .choice-chip.selected {
+    .c-ChoicePicker .choice-chip:hover { background: #f1f3f4; }
+    .c-ChoicePicker .choice-chip.selected {
       background: #e8f0fe;
       border-color: #1a73e8;
       color: #1a73e8;
@@ -196,9 +196,23 @@
         }
         case 'Divider': return document.createElement('hr');
         case 'Icon': {
+          const iconMap = {
+            shoppingCart: 'shopping_cart', locationOn: 'location_on',
+            accountCircle: 'account_circle', arrowBack: 'arrow_back',
+            arrowForward: 'arrow_forward', attachFile: 'attach_file',
+            calendarToday: 'calendar_today', fastForward: 'fast_forward',
+            favoriteOff: 'favorite_border', lockOpen: 'lock_open',
+            moreVert: 'more_vert', moreHoriz: 'more_horiz',
+            notificationsOff: 'notifications_off', skipNext: 'skip_next',
+            skipPrevious: 'skip_previous', starHalf: 'star_half',
+            starOff: 'star_border', volumeDown: 'volume_down',
+            volumeMute: 'volume_mute', volumeOff: 'volume_off',
+            volumeUp: 'volume_up', visibilityOff: 'visibility_off',
+          };
           const el = document.createElement('span');
           el.className = 'c-Icon';
-          el.textContent = resolve(comp.name);
+          const name = resolve(comp.name);
+          el.textContent = iconMap[name] || name;
           return el;
         }
         case 'Text': {
@@ -223,18 +237,27 @@
           wrapper.appendChild(input);
           return wrapper;
         }
-        case 'MultipleChoice': {
+        case 'ChoicePicker': {
           const wrap = document.createElement('div');
-          wrap.className = 'c-MultipleChoice';
-          const currentVal = resolve(comp.value);
+          wrap.className = 'c-ChoicePicker';
+          const currentVal = resolve(comp.value) || [];
+          const isMulti = comp.variant === 'multipleSelection';
           for (const opt of (comp.options || [])) {
             const chip = document.createElement('button');
-            chip.className = 'choice-chip' + (opt.value === currentVal ? ' selected' : '');
+            chip.className = 'choice-chip' + (currentVal.includes(opt.value) ? ' selected' : '');
             chip.textContent = opt.label;
             chip.addEventListener('click', () => {
-              if (comp.value?.path) setPath(dataModel, comp.value.path, opt.value);
-              wrap.querySelectorAll('.choice-chip').forEach(c => c.classList.remove('selected'));
-              chip.classList.add('selected');
+              if (comp.value?.path) {
+                let arr = getPath(dataModel, comp.value.path) || [];
+                if (isMulti) {
+                  arr = arr.includes(opt.value) ? arr.filter(v => v !== opt.value) : [...arr, opt.value];
+                } else {
+                  arr = [opt.value];
+                  wrap.querySelectorAll('.choice-chip').forEach(c => c.classList.remove('selected'));
+                }
+                setPath(dataModel, comp.value.path, arr);
+                chip.classList.toggle('selected', arr.includes(opt.value));
+              }
             });
             wrap.appendChild(chip);
           }

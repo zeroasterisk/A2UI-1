@@ -15,7 +15,7 @@ The agent needs structured data from the user — in this case, shipping details
 
 ```bash
 # Any static file server works
-cd samples/a2h-prototypes/p3-guided-input
+cd samples/a2h-prototypes/p3-guided-input-v0.9.0
 python3 -m http.server 8080
 # Open http://localhost:8080
 ```
@@ -26,7 +26,7 @@ The COLLECT intent translates to a surface with:
 
 1. **`createSurface`** with `sendDataModel: true` — tells the host that when an event fires, the entire data model should be included in the payload sent back to the agent.
 2. **`TextField` components** with `value: {"path": "/shipping/name"}` — each field reads from and writes to a path in the data model. This is two-way binding: pre-populated values show up, user edits flow back.
-3. **`MultipleChoice`** for constrained selections (delivery speed) — also data-bound.
+3. **`ChoicePicker`** for constrained selections (delivery speed) — also data-bound, with `variant: "mutuallyExclusive"` and `displayStyle: "chips"`.
 4. **`Button`** with an event action — on click, the renderer collects the current data model and sends it as the event payload.
 5. **`updateDataModel`** pre-populates known info (saved address from user profile).
 

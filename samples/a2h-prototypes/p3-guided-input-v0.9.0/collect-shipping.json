@@ -45,7 +45,7 @@
         {
           "id": "header-icon",
           "component": "Icon",
-          "name": "local_shipping"
+          "name": "shoppingCart"
         },
         {
           "id": "header-text",
@@ -106,12 +106,15 @@
           "id": "speed-label",
           "component": "Text",
           "text": "Delivery speed",
-          "variant": "label"
+          "variant": "caption"
         },
         {
           "id": "speed-choice",
-          "component": "MultipleChoice",
+          "component": "ChoicePicker",
+          "label": "Delivery speed",
           "value": { "path": "/shipping/speed" },
+          "variant": "mutuallyExclusive",
+          "displayStyle": "chips",
           "options": [
             { "label": "Standard (5–7 days)", "value": "standard" },
             { "label": "Express (2–3 days)", "value": "express" },
@@ -157,7 +160,7 @@
           "state": "IL",
           "zip": "62704",
           "phone": "",
-          "speed": "standard"
+          "speed": ["standard"]
         }
       }
     }
