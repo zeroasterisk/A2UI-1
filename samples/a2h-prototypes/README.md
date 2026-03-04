@@ -1,0 +1,68 @@
+# A2H × A2UI Prototypes
+
+Exploration of rendering [A2H](https://github.com/twilio/a2h) (Agent-to-Human) intents using the A2UI v0.9 protocol. Five working prototypes validate the mapping between A2H's five intent types and A2UI's component model.
+
+## Quick Start
+
+Open the all-in-one demo:
+
+```bash
+cd demo && npx serve .
+# Or just open demo/index.html in your browser
+```
+
+## Contents
+
+| Path | Description |
+|------|-------------|
+| [DESIGN.md](./DESIGN.md) | Full design document — intent mapping, conventions, proposed enhancements |
+| [demo/](./demo/) | **All 5 intents on one page**, generated via the helper library |
+| [lib/a2h-a2ui.js](./lib/a2h-a2ui.js) | Helper library — generates A2UI v0.9 messages from A2H intent descriptions |
+| [p1-approval/](./p1-approval/) | **AUTHORIZE** — Financial transfer approval card |
+| [p2-escalation/](./p2-escalation/) | **ESCALATE** — Customer service handoff |
+| [p3-guided-input/](./p3-guided-input/) | **COLLECT** — Shipping address form (⭐ cleanest prototype) |
+| [p4-progress-intervention/](./p4-progress-intervention/) | **INFORM → AUTHORIZE** — Deploy pipeline with progressive updates |
+| [p5-wizard/](./p5-wizard/) | **COLLECT → COLLECT → INFORM → AUTHORIZE** — Expense report wizard |
+
+## Helper Library API
+
+```js
+import {
+  createAuthorizeSurface,
+  createCollectSurface,
+  createInformSurface,
+  createEscalateSurface,
+  createResultSurface,
+} from './lib/a2h-a2ui.js';
+
+const messages = createAuthorizeSurface({
+  surfaceId: 'a2h:authorize:001',
+  title: 'Authorization Required',
+  description: 'Agent wants to book a flight.',
+  details: [{ label: 'Amount', path: '/amount' }],
+  dataModel: { amount: '$450.00' },
+});
+// Returns: [createSurface, updateDataModel, updateComponents] — valid A2UI v0.9
+```
+
+Each function returns an array of A2UI v0.9 messages with valid component IDs, `catalogId: "basic"`, proper data bindings, and `sendDataModel: true` on interactive surfaces.
+
+## Key Findings
+
+- **`sendDataModel: true`** is the key enabler — eliminates per-field wiring for forms and approvals
+- **Data binding** (`{path: "/foo"}`) provides clean two-way binding
+- **Incremental updates** via `updateComponents` merge enables real-time progress UIs
+- **A2UI v0.9 covers ~80%** of A2H rendering needs today
+
+## Proposed A2UI Enhancements
+
+1. **`visible` binding** — Conditional rendering (eliminates tree-swap workarounds)
+2. **Button `label` prop** — Kills 2-component-per-button boilerplate (~15-20% reduction)
+3. **ProgressIndicator** — Proper loading/progress states
+4. **KeyValue component** — Eliminates 3-component-per-detail-row pattern
+
+See [DESIGN.md](./DESIGN.md) for full analysis.
+
+## Status
+
+**Exploration / proof-of-concept.** Prototypes are static HTML+JS with inline renderers. The helper library generates valid A2UI v0.9 but is not yet published as an npm package. Next steps: propose enhancements to the A2UI spec, port to real renderers (Lit/Angular/Flutter).

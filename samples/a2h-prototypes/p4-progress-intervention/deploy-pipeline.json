@@ -1,11 +1,16 @@
 [
   {
+    "version": "v0.9",
     "createSurface": {
-      "id": "deploy-pipeline",
-      "title": "Deployment Pipeline",
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
+      "catalogId": "https://a2ui.org/specification/v0_9/basic_catalog.json",
       "sendDataModel": true
-    },
+    }
+  },
+  {
+    "version": "v0.9",
     "updateDataModel": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "value": {
         "pipeline": {
           "app": "acme-web-v2.4.1",
@@ -20,23 +25,27 @@
           }
         }
       }
-    },
+    }
+  },
+  {
+    "version": "v0.9",
     "updateComponents": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "components": [
         { "id": "root", "component": "Card", "child": "main-col" },
-        { "id": "main-col", "component": "Column", "children": ["header-row", "divider1", "info-row", "divider2", "step-build", "step-test", "step-stage", "step-deploy"] },
+        { "id": "main-col", "component": "Column", "children": ["header-row", "divider-1", "info-row", "divider-2", "step-build", "step-test", "step-stage", "step-deploy"] },
 
         { "id": "header-row", "component": "Row", "children": ["header-icon", "header-text"], "align": "center" },
         { "id": "header-icon", "component": "Text", "text": "🚀", "variant": "h3" },
         { "id": "header-text", "component": "Text", "text": "Deployment Pipeline", "variant": "h3" },
 
-        { "id": "divider1", "component": "Divider" },
+        { "id": "divider-1", "component": "Divider" },
 
         { "id": "info-row", "component": "Column", "children": ["info-app", "info-commit"] },
         { "id": "info-app", "component": "Text", "text": { "path": "/pipeline/app" }, "variant": "body" },
         { "id": "info-commit", "component": "Text", "text": { "path": "/pipeline/commit" }, "variant": "caption" },
 
-        { "id": "divider2", "component": "Divider" },
+        { "id": "divider-2", "component": "Divider" },
 
         { "id": "step-build", "component": "Row", "children": ["build-icon", "build-label"], "align": "center" },
         { "id": "build-icon", "component": "Text", "text": "⏳" },
@@ -58,8 +67,10 @@
   },
 
   {
+    "version": "v0.9",
     "_comment": "Step 2: Build complete, Test running",
     "updateDataModel": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "value": {
         "pipeline": {
           "app": "acme-web-v2.4.1",
@@ -74,8 +85,12 @@
           }
         }
       }
-    },
+    }
+  },
+  {
+    "version": "v0.9",
     "updateComponents": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "components": [
         { "id": "build-icon", "component": "Text", "text": "✅" },
         { "id": "build-label", "component": "Text", "text": "Build — 1m 12s", "variant": "body" },
@@ -86,8 +101,10 @@
   },
 
   {
+    "version": "v0.9",
     "_comment": "Step 3: Test complete, Stage running",
     "updateDataModel": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "value": {
         "pipeline": {
           "app": "acme-web-v2.4.1",
@@ -102,8 +119,12 @@
           }
         }
       }
-    },
+    }
+  },
+  {
+    "version": "v0.9",
     "updateComponents": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "components": [
         { "id": "test-icon", "component": "Text", "text": "✅" },
         { "id": "test-label", "component": "Text", "text": "Test — 48/48 passed", "variant": "body" },
@@ -114,8 +135,10 @@
   },
 
   {
+    "version": "v0.9",
     "_comment": "Step 4: Stage complete, Deploy PAUSED for approval",
     "updateDataModel": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "value": {
         "pipeline": {
           "app": "acme-web-v2.4.1",
@@ -130,26 +153,30 @@
           }
         }
       }
-    },
+    }
+  },
+  {
+    "version": "v0.9",
     "updateComponents": {
+      "surfaceId": "a2h-inform-deploy-pipeline-001",
       "components": [
         { "id": "stage-icon", "component": "Text", "text": "✅" },
         { "id": "stage-label", "component": "Text", "text": "Stage — live at stage.acme.dev", "variant": "body" },
         { "id": "deploy-icon", "component": "Text", "text": "⏸️" },
         { "id": "deploy-label", "component": "Text", "text": "Deploy — awaiting approval", "variant": "body" },
 
-        { "id": "main-col", "component": "Column", "children": ["header-row", "divider1", "info-row", "divider2", "step-build", "step-test", "step-stage", "step-deploy", "divider3", "approve-card"] },
-        { "id": "divider3", "component": "Divider" },
+        { "id": "main-col", "component": "Column", "children": ["header-row", "divider-1", "info-row", "divider-2", "step-build", "step-test", "step-stage", "step-deploy", "divider-3", "approve-card"] },
+        { "id": "divider-3", "component": "Divider" },
 
         { "id": "approve-card", "component": "Card", "child": "approve-col" },
-        { "id": "approve-col", "component": "Column", "children": ["approve-title", "approve-desc", "approve-buttons"] },
+        { "id": "approve-col", "component": "Column", "children": ["approve-title", "approve-desc", "approve-actions"] },
         { "id": "approve-title", "component": "Text", "text": "⚠️ Deploy to production?", "variant": "h3" },
         { "id": "approve-desc", "component": "Text", "text": "acme-web-v2.4.1 (a3f9c21) • 48/48 tests passed • Staged OK", "variant": "body" },
-        { "id": "approve-buttons", "component": "Row", "children": ["btn-rollback", "btn-approve"], "justify": "end" },
-        { "id": "btn-rollback", "component": "Button", "variant": "default", "child": "btn-rollback-text", "action": { "event": { "name": "pipeline.rollback", "context": { "app": { "path": "/pipeline/app" }, "commit": { "path": "/pipeline/commit" } } } } },
+        { "id": "approve-actions", "component": "Row", "children": ["btn-rollback", "btn-approve"], "justify": "end" },
         { "id": "btn-rollback-text", "component": "Text", "text": "Rollback" },
-        { "id": "btn-approve", "component": "Button", "variant": "primary", "child": "btn-approve-text", "action": { "event": { "name": "pipeline.approve_deploy", "context": { "app": { "path": "/pipeline/app" }, "commit": { "path": "/pipeline/commit" } } } } },
-        { "id": "btn-approve-text", "component": "Text", "text": "Approve" }
+        { "id": "btn-rollback", "component": "Button", "variant": "default", "child": "btn-rollback-text", "action": { "event": { "name": "a2h.authorize.rollback", "context": { "app": { "path": "/pipeline/app" }, "commit": { "path": "/pipeline/commit" } } } } },
+        { "id": "btn-approve-text", "component": "Text", "text": "Approve" },
+        { "id": "btn-approve", "component": "Button", "variant": "primary", "child": "btn-approve-text", "action": { "event": { "name": "a2h.authorize.approve", "context": { "app": { "path": "/pipeline/app" }, "commit": { "path": "/pipeline/commit" } } } } }
       ]
     }
   }
