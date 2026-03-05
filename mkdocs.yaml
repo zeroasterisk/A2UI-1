@@ -184,7 +184,15 @@ plugins:
   # - include-markdown
   - mermaid2
   - redirects:
-      redirect_maps: {}
+      redirect_maps:
+        # Files moved in docs-file-org reorganization
+        'catalogs.md': 'concepts/catalogs.md'
+        'transports.md': 'concepts/transports.md'
+        'client_to_server_actions.md': 'concepts/client_to_server_actions.md'
+        'renderers.md': 'reference/renderers.md'
+        'agents.md': 'reference/agents.md'
+        'community.md': 'ecosystem/community.md'
+        'introduction/where-is-it-used.md': 'ecosystem/a2ui-in-the-world.md'
   # - llmstxt:
   #     full_output: llms-full.txt
   #     sections:
