@@ -2,6 +2,19 @@
 
 The agentic UI space is evolving rapidly. Here's how A2UI relates to the other major approaches.
 
+## At a Glance
+
+| | **A2UI** | **MCP Apps** | **AG UI** |
+|---|---|---|---|
+| **Approach** | Declarative component blueprints | Pre-built HTML via `ui://` URIs | High-bandwidth protocol connecting backends to frontends |
+| **Rendering** | Native components (Angular, Flutter, Lit, etc.) | Sandboxed `iframe` | Developer-defined (any framework) |
+| **Styling** | Host app controls — inherits design system | Isolated — remote server controls appearance | Developer controls — part of the host app |
+| **Security** | Declarative data, no code execution | Sandboxed iframe isolation | Trusted code within your own app |
+| **Multi-agent** | ✅ Across trust boundaries | ✅ Multiple MCP servers | ⚠️ Primarily single-agent |
+| **Cross-platform** | ✅ Web, mobile, desktop, native | ⚠️ Web-focused (iframe) | ✅ Protocol is framework-agnostic |
+| **LLM generation** | ✅ Designed for streaming output | ❌ Pre-built by server | ✅ Via A2UI integration |
+| **Spec** | Open protocol (Apache 2.0) | Part of MCP specification | Open source (by CopilotKit) |
+
 ## A2UI vs MCP Apps
 
 [MCP Apps](https://blog.modelcontextprotocol.io/posts/2025-11-21-mcp-apps/) treat UI as a **resource** — servers provide pre-built HTML via `ui://` URIs, rendered in sandboxed iframes. The remote integration controls all content and appearance, with configuration happening through tool calling. A2UI takes a **declarative UI** approach — agents send component blueprints, but the host application controls styling, theming, and how those components are configured and rendered. Choose MCP Apps when the server should own the full UI experience; choose A2UI when you want dynamic, cross-platform UI that fits naturally into your app.
