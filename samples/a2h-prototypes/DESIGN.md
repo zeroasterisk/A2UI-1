@@ -62,7 +62,7 @@ Every intent maps to the same three-message pattern:
 createSurface  →  updateDataModel  →  updateComponents
 ```
 
-Surface IDs follow: `a2h:{intent}:{interactionId}`  
+Surface IDs follow: `a2h-{intent}-{interactionId}`  
 Event names follow: `a2h.{intent}.{action}` (e.g., `a2h.authorize.approve`)
 
 ---
@@ -180,10 +180,10 @@ These require no spec changes — just documented best practices.
 ### Surface ID Convention
 
 ```
-a2h:{intentType}:{interactionId}
+a2h-{intentType}-{interactionId}
 ```
 
-Example: `a2h:authorize:01936f8a-7b2c-7000-8000-000000000001`
+Example: `a2h-authorize-01936f8a-7b2c-7000-8000-000000000001`
 
 ### Component ID Convention
 
@@ -286,7 +286,7 @@ const response = parseActionEvent(event);
 
 ```typescript
 // Surface/component ID generation
-makeSurfaceId('authorize', interactionId)  // → "a2h:authorize:01936f8a-..."
+makeSurfaceId('authorize', interactionId)  // → "a2h-authorize-01936f8a-..."
 makeFieldId('email')                        // → "field-email"
 
 // JSONL serialization

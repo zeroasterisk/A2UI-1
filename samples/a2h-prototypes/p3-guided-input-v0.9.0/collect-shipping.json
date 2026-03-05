@@ -2,7 +2,7 @@
   {
     "version": "v0.9",
     "createSurface": {
-      "surfaceId": "collect-shipping",
+      "surfaceId": "a2h-collect-shipping-001",
       "catalogId": "https://a2ui.org/specification/v0_9/basic_catalog.json",
       "sendDataModel": true
     }
@@ -10,7 +10,7 @@
   {
     "version": "v0.9",
     "updateComponents": {
-      "surfaceId": "collect-shipping",
+      "surfaceId": "a2h-collect-shipping-001",
       "components": [
         {
           "id": "root",
@@ -140,7 +140,7 @@
           "child": "submit-btn-text",
           "action": {
             "event": {
-              "name": "submitShipping",
+              "name": "a2h.collect.submit",
               "context": {}
             }
           }
@@ -151,7 +151,7 @@
   {
     "version": "v0.9",
     "updateDataModel": {
-      "surfaceId": "collect-shipping",
+      "surfaceId": "a2h-collect-shipping-001",
       "value": {
         "shipping": {
           "name": "Jane Doe",

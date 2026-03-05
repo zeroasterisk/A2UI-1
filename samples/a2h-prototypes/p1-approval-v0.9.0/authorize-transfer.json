@@ -208,7 +208,8 @@
           "action": "Transfer Funds",
           "fromAccount": "Checking (****4521)",
           "toAccount": "Savings (****7890)",
-          "amount": "$500.00"
+          "amount": 500.00,
+          "amountFormatted": { "formatCurrency": { "path": "/transfer/amount", "currency": "USD" } }
         },
         "meta": {
           "interactionId": "txn-2026-0304-001",

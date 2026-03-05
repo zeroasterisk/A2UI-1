@@ -109,7 +109,7 @@ function makeDetailRow(id, label, valuePath) {
   const valId = `${id}-val`;
   return [
     { id: rowId, component: 'Row', children: [labelId, valId] },
-    { id: labelId, component: 'Text', text: label, variant: 'label' },
+    { id: labelId, component: 'Text', text: label, variant: 'caption' },
     { id: valId, component: 'Text', text: typeof valuePath === 'string' && valuePath.startsWith('/') ? { path: valuePath } : (valuePath ?? ''), variant: 'body' },
   ];
 }
@@ -172,12 +172,6 @@ export function createAuthorizeSurface({ surfaceId, title, description, details 
     actionChildren: actionComps.filter(c => c.component === 'Button' || c.component === 'Text'),
   });
 
-  // Flatten: action buttons need both Text and Button components
-  const allActionComps = [];
-  for (const a of actionDefs) {
-    allActionComps.push(...makeButton(a.id, a.label, a.variant || 'default', a.event, {}));
-  }
-
   return [
     createSurfaceMsg(surfaceId),
     updateDataModelMsg(surfaceId, dataModel),
@@ -205,7 +199,7 @@ export function createCollectSurface({ surfaceId, title, fields = [], submitLabe
   for (const f of fields) {
     const labelId = `field-${f.id}-label`;
     const fieldId = `field-${f.id}`;
-    fieldComponents.push({ id: labelId, component: 'Text', text: f.label, variant: 'label' });
+    fieldComponents.push({ id: labelId, component: 'Text', text: f.label, variant: 'caption' });
 
     if (f.type === 'select') {
       fieldComponents.push({
@@ -267,7 +261,7 @@ export function createInformSurface({ surfaceId, title, items = [], dataModel = 
       bodyComponents.push(
         { id: rowId, component: 'Row', children: [iconId, labelId, valId] },
         { id: iconId, component: 'Text', text: item.icon },
-        { id: labelId, component: 'Text', text: item.label, variant: 'label' },
+        { id: labelId, component: 'Text', text: item.label, variant: 'caption' },
         { id: valId, component: 'Text', text: item.value, variant: 'body' },
       );
     } else {
@@ -326,7 +320,7 @@ export function createEscalateSurface({ surfaceId, reason, context, options, dat
     bodyComponents.push(
       { id: ctxCardId, component: 'Card', child: ctxColId },
       { id: ctxColId, component: 'Column', children: [ctxLabelId, ctxTextId] },
-      { id: ctxLabelId, component: 'Text', text: 'Context', variant: 'label' },
+      { id: ctxLabelId, component: 'Text', text: 'Context', variant: 'caption' },
       { id: ctxTextId, component: 'Text', text: context, variant: 'body' },
     );
   }
