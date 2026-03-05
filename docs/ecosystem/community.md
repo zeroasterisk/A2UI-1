@@ -74,13 +74,13 @@ Significant contributors may be invited to join the project's maintainer team.
 **[github.com/google/A2UI](https://github.com/google/A2UI)**
 
 - **Report Issues**: Found a bug? [Open an issue](https://github.com/google/A2UI/issues)
-- **Build Renderers**: See the [roadmap](roadmap.md) for planned frameworks
+- **Build Renderers**: See the [roadmap](../roadmap.md) for planned frameworks
 - **Share Examples**: Post with `#A2UI` on X/LinkedIn, start a [discussion](https://github.com/google/A2UI/discussions)
 - **Improve Docs**: PRs welcome in the `docs/` directory
 
 ## Questions?
 
-- Check the [documentation](introduction/what-is-a2ui.md)
+- Check the [documentation](../introduction/what-is-a2ui.md)
 - Search [GitHub Discussions](https://github.com/google/A2UI/discussions)
 - Ask in [GitHub Issues](https://github.com/google/A2UI/issues)
 

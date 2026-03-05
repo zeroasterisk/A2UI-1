@@ -93,7 +93,7 @@ Common transport options:
 
 TODO: Add transport implementation examples.
 
-**See:** [Transports guide](../transports.md)
+**See:** [Transports guide](../concepts/transports.md)
 
 ## Handling User Actions
 

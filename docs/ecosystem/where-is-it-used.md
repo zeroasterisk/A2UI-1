@@ -134,9 +134,14 @@ The A2UI community is building exciting projects:
     - Live examples with code
     - Great for learning
 
+### Third-Party Integrations
+
+- **[json-render](https://json-render.dev/docs/a2ui)** — Vercel's React library for rendering A2UI component catalogs via Zod schemas. See [json-render vs. A2UI comparison](https://dipjyotimetia.medium.com/vercels-json-render-vs-google-s-a2ui-the-head-to-head-6f213cf1a23b).
+- **[OpenClaw Canvas](https://docs.openclaw.ai/platforms/mac/canvas)** — OpenClaw uses A2UI to render agent-generated UI on connected devices via its canvas system. See [architecture overview](https://ppaolo.substack.com/p/openclaw-system-architecture-overview).
+
 ### Community Contributions
 
-Have you built something with A2UI? [Share it with the community!](../community.md)
+Have you built something with A2UI? [Share it with the community!](../ecosystem/community.md)
 
 ---
 
@@ -145,7 +150,7 @@ Have you built something with A2UI? [Share it with the community!](../community.
 - [Quickstart Guide](../quickstart.md) - Try the demo
 - [Agent Development](../guides/agent-development.md) - Build an agent
 - [Client Setup](../guides/client-setup.md) - Integrate a renderer
-- [Community](../community.md) - Join the community
+- [Community](community.md) - Join the community
 
 ---
 
