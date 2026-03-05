@@ -13,7 +13,7 @@ The agentic UI space is evolving rapidly. Here's how A2UI relates to the other m
 | **Multi-agent** | ✅ Across trust boundaries | ✅ Multiple MCP servers | ⚠️ Primarily single-agent |
 | **Cross-platform** | ✅ Web, mobile, desktop, native | ⚠️ Web-focused (iframe) | ✅ Protocol is framework-agnostic |
 | **LLM generation** | ✅ Designed for streaming output | ❌ Pre-built by server | ✅ Via A2UI integration |
-| **Spec** | Open protocol (Apache 2.0) | Part of MCP specification | Open source (by CopilotKit) |
+| **Spec** | Open protocol (Apache 2.0) | [MCP extension](https://modelcontextprotocol.io/docs/extensions/apps) (SEP-1865) | Open source (by CopilotKit) |
 
 ## A2UI vs MCP Apps
 
@@ -39,4 +39,4 @@ These approaches are complementary, not competing:
 
 - [What is A2UI?](what-is-a2ui.md) — Protocol overview
 - [Transports](../concepts/transports.md) — How A2UI messages travel between agents and clients
-- [Where is A2UI Used?](../ecosystem/where-is-it-used.md) — Case studies and adopters
+- [Where is A2UI Used?](../ecosystem/a2ui-in-the-world.md) — Case studies and adopters
