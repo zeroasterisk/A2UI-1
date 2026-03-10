@@ -8,13 +8,13 @@ Community and third-party A2UI renderer implementations.
 
 ## Community Renderers
 
-| Renderer | Platform | npm / Package | v0.8 | v0.9 | Links |
-|----------|----------|---------------|------|------|-------|
-| **@a2ui-sdk/react** | React (Web) | `@a2ui-sdk/react` | ✅ | ❌ | [GitHub](https://github.com/easyops-cn/a2ui-sdk) · [npm](https://www.npmjs.com/package/@a2ui-sdk/react) · [Docs](https://a2ui-sdk.js.org/) |
-| **A2UI-Android** | Android (Jetpack Compose) | — | ✅ | ❌ | [GitHub](https://github.com/lmee/A2UI-Android) |
-| **a2ui-react-native** | React Native (Mobile) | — | ✅ | ❌ | [GitHub](https://github.com/sivamrudram-eng/a2ui-react-native) |
-| **@zhama/a2ui** | React (Web) | `@zhama/a2ui` | ✅ | ❌ | [npm](https://www.npmjs.com/package/@zhama/a2ui) |
-| **A2UI-react** | React (Web) | — | ✅ | ❌ | [GitHub](https://github.com/jem-computer/A2UI-react) |
+| Renderer | Platform | v0.8 | v0.9 | Activity | Links |
+|----------|----------|------|------|----------|-------|
+| **@a2ui-sdk/react** | React (Web) | ✅ | ❌ | ![Stars](https://img.shields.io/github/stars/easyops-cn/a2ui-sdk?style=flat-square&label=⭐) ![Last commit](https://img.shields.io/github/last-commit/easyops-cn/a2ui-sdk?style=flat-square&label=updated) | [GitHub](https://github.com/easyops-cn/a2ui-sdk) · [npm](https://www.npmjs.com/package/@a2ui-sdk/react) · [Docs](https://a2ui-sdk.js.org/) |
+| **A2UI-Android** | Android (Compose) | ✅ | ❌ | ![Stars](https://img.shields.io/github/stars/lmee/A2UI-Android?style=flat-square&label=⭐) ![Last commit](https://img.shields.io/github/last-commit/lmee/A2UI-Android?style=flat-square&label=updated) | [GitHub](https://github.com/lmee/A2UI-Android) |
+| **a2ui-react-native** | React Native | ✅ | ❌ | ![Stars](https://img.shields.io/github/stars/sivamrudram-eng/a2ui-react-native?style=flat-square&label=⭐) ![Last commit](https://img.shields.io/github/last-commit/sivamrudram-eng/a2ui-react-native?style=flat-square&label=updated) | [GitHub](https://github.com/sivamrudram-eng/a2ui-react-native) |
+| **@zhama/a2ui** | React (Web) | ✅ | ❌ | — | [npm](https://www.npmjs.com/package/@zhama/a2ui) |
+| **A2UI-react** | React (Web) | ✅ | ❌ | ![Stars](https://img.shields.io/github/stars/jem-computer/A2UI-react?style=flat-square&label=⭐) ![Last commit](https://img.shields.io/github/last-commit/jem-computer/A2UI-react?style=flat-square&label=updated) | [GitHub](https://github.com/jem-computer/A2UI-react) |
 
 ### Notable Mentions
 
