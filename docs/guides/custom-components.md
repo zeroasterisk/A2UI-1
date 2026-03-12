@@ -1,20 +1,20 @@
-# Custom Components
+# Custom Component Catalogs
 
-Extend A2UI with your own components — maps, charts, video players, or anything your application needs.
+Extend A2UI with a catalog of your own components — video players, maps, charts, or anything your application needs.
 
-## Why Custom Components?
+## Why Custom Catalogs?
 
-The A2UI Standard Catalog covers common UI elements (text, buttons, inputs, layout), but real applications need specialized components:
+The A2UI Basic Catalog covers common UI elements (text, buttons, inputs, layout), but your application might need specialized components:
 
+- **Media**: YouTube embeds, audio visualizers, 3D viewers
 - **Maps**: Google Maps, Mapbox, Leaflet
 - **Charts**: Chart.js, D3, Recharts
-- **Media**: YouTube embeds, audio visualizers, 3D viewers
 - **Domain-specific**: Stock tickers, medical imaging, CAD viewers
 
-Custom components let agents generate UI that includes **any** component your app supports — not just what's in the standard catalog.
+Custom catalogs let agents generate UI that includes **any** component your app supports — not just what's in the basic catalog.
 
 !!! tip "Already have a component library?"
-    If you're adding A2UI to an existing app with its own design system (Material, Ant Design, PrimeNG, etc.), start with the [Design System Integration](design-system-integration.md) guide first — it walks through wiring A2UI into your app before adding custom components.
+    If you're adding A2UI to an existing app with its own design system (Material, Ant Design, PrimeNG, etc.), start with the [Design System Integration](design-system-integration.md) guide first — it walks through wrapping your existing components as A2UI components.
 
 ## How It Works
 
@@ -27,11 +27,11 @@ Angular ──renders──> <a2ui-map [zoom]="..." />  <───┘
 ```
 
 1. You **implement** an Angular component that extends `DynamicComponent`
-2. You **register** it in a catalog alongside standard components
+2. You **register** it in a catalog
 3. The agent **references** it by name in `updateComponents` messages
 4. The A2UI renderer **instantiates** your component with the agent's properties
 
-## Step-by-Step: Adding a YouTube Component
+## Adding a Custom Component: YouTube Example
 
 Let's add a YouTube video player as a custom A2UI component.
 
@@ -56,11 +56,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'a2ui-youtube',
   changeDetection: ChangeDetectionStrategy.Eager,
   styles: `
-    :host {
-      display: block;
-      flex: var(--weight);
-      padding: 8px;
-    }
+    :host { display: block; flex: var(--weight); padding: 8px; }
     .video-container {
       position: relative;
       width: 100%;
@@ -70,15 +66,9 @@ import { DomSanitizer } from '@angular/platform-browser';
     }
     iframe {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       border: none;
-    }
-    h3 {
-      margin: 8px 0 4px;
-      color: var(--mat-sys-on-surface);
     }
   `,
   template: `
@@ -97,6 +87,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   `,
 })
 export class YouTube extends DynamicComponent<Types.CustomNode> {
+  private static readonly YOUTUBE_ID_REGEX = /^[a-zA-Z0-9_-]{11}$/;
+
   readonly videoId = input.required<Primitives.StringValue | null>();
   protected readonly resolvedVideoId = computed(() =>
     this.resolvePrimitive(this.videoId()),
@@ -110,6 +102,13 @@ export class YouTube extends DynamicComponent<Types.CustomNode> {
   protected readonly safeUrl = computed(() => {
     const id = this.resolvedVideoId();
     if (!id) return null;
+
+    // Validate video ID format before constructing URL
+    if (!YouTube.YOUTUBE_ID_REGEX.test(id)) {
+      console.error('Invalid YouTube video ID received from agent:', id);
+      return null;
+    }
+
     const url = `https://www.youtube.com/embed/${encodeURIComponent(id)}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   });
@@ -126,10 +125,11 @@ export class YouTube extends DynamicComponent<Types.CustomNode> {
 - Use `input()` for properties the agent will set
 - Use `resolvePrimitive()` to resolve values that may be literals or data-bound paths
 - Use `computed()` for reactive derivations
+- Validate agent-provided data before use (e.g., video ID format check)
 
-### 2. Register in the Catalog
+### 2. Register in a Catalog
 
-Add your component to the catalog alongside standard components:
+Add your component to a catalog:
 
 ```typescript
 // a2ui-catalog/catalog.ts
@@ -153,15 +153,17 @@ export const MY_CATALOG = {
 } as Catalog;
 ```
 
+A2UI ships with a basic catalog to get you started quickly, but you do **not** need to use it. If your design system already provides the components you want to render, you can expose only your own components, or a mix of basic and custom components.
+
 **What's happening:**
 
-- `...DEFAULT_CATALOG` — spread the standard catalog so agents can use standard components too
+- `...DEFAULT_CATALOG` — optionally spread the basic catalog (Text, Button, etc.)
 - `type` — lazy-loaded import of your component class
 - `bindings` — maps properties from the A2UI JSON to Angular `@Input()` values
 
 ### 3. Use the Custom Catalog
 
-Update your app config to use your custom catalog instead of the default:
+Update your app config to use your catalog:
 
 ```typescript
 // app.config.ts
@@ -204,9 +206,7 @@ The agent references your component by name in `updateComponents`:
 
 The agent knows about your custom components through the catalog configuration in its prompt or system instructions.
 
-## More Examples
-
-### Google Maps Component
+## Google Maps Example
 
 A map component that displays pins from the agent's data model:
 
@@ -224,8 +224,8 @@ A map component that displays pins from the agent's data model:
   `,
 })
 export class GoogleMap extends DynamicComponent<Types.CustomNode> {
-  readonly zoom = input.required<Primitives.NumberValue | null>();
-  readonly center = input.required<{ path: string } | null>();
+  readonly zoom = input<Primitives.NumberValue | null>();
+  readonly center = input<{ path: string } | null>();
   readonly pins = input<{ path: string }>();
 
   protected resolvedZoom = computed(() => this.resolvePrimitive(this.zoom()));
@@ -265,7 +265,7 @@ GoogleMap: {
 
 Maps uses **data binding** — the `center` and `pins` reference paths in the data model, so the agent can update locations dynamically via `updateDataModel`.
 
-### Chart Component
+## Chart Example
 
 A chart component using Chart.js:
 
@@ -310,7 +310,7 @@ Chart: {
 },
 ```
 
-### Any Component
+## Any Component
 
 The same pattern works for **any Angular component**. If you can build it as an Angular component, you can make it an A2UI custom component:
 
@@ -369,7 +369,6 @@ For agents to use your custom components, include the component definitions in t
 catalog = CatalogConfig(
     catalog_id="my-custom-catalog",
     components={
-        # Standard components are inherited
         "YouTube": {
             "description": "Embedded YouTube video player",
             "properties": {
@@ -399,11 +398,10 @@ catalog = CatalogConfig(
 
 ## Working Examples
 
-- [**rizzcharts**](https://github.com/google/a2ui/tree/main/samples/client/angular/projects/rizzcharts) — Chart.js + Google Maps custom components
-- [**custom-components**](https://github.com/google/a2ui/tree/main/samples/client/angular/projects/custom-components) — YouTube + Maps + Charts starter sample
+- [**rizzcharts**](https://github.com/google/a2ui/tree/main/samples/client/angular/projects/rizzcharts) — Chart.js + Google Maps + YouTube custom components
 
 ## Next Steps
 
-- [Design System Integration](design-system-integration.md) — Add A2UI to an existing Material app
+- [Design System Integration](design-system-integration.md) — Wrap your existing design system components as A2UI components
 - [Theming Guide](theming.md) — Style custom components with your design system
 - [Agent Development](agent-development.md) — Build agents that use custom components
