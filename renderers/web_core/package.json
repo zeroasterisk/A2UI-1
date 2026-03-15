@@ -42,7 +42,6 @@
     "build:tsc": "wireit",
     "test": "wireit",
     "test:coverage": "c8 node --test \"dist/**/*.test.js\""
-
   },
   "wireit": {
     "copy-spec": {
@@ -90,7 +89,7 @@
   "devDependencies": {
     "@types/node": "^24.11.0",
     "c8": "^11.0.0",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "wireit": "^0.15.0-pre.2"
   },
   "dependencies": {
