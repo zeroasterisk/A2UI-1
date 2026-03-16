@@ -11,6 +11,11 @@ import contactLookup from './contact-lookup.json';
 import orgChart from './org-chart.json';
 import floorPlan from './floor-plan.json';
 import rizzchartsChart from './rizzcharts-chart.json';
+import multiSurface from './multi-surface.json';
+import chartNodeClick from './chart-node-click.json';
+import rizzchartsCatalogChart from './rizzcharts-catalog-chart.json';
+import rizzchartsCatalogMap from './rizzcharts-catalog-map.json';
+import standardCatalogMap from './standard-catalog-map.json';
 
 export const scenarios = {
   'restaurant-booking': restaurantBooking,
@@ -25,6 +30,11 @@ export const scenarios = {
   'org-chart': orgChart,
   'floor-plan': floorPlan,
   'rizzcharts-chart': rizzchartsChart,
+  'multi-surface': multiSurface,
+  'chart-node-click': chartNodeClick,
+  'rizzcharts-catalog-chart': rizzchartsCatalogChart,
+  'rizzcharts-catalog-map': rizzchartsCatalogMap,
+  'standard-catalog-map': standardCatalogMap,
 };
 
 export type ScenarioId = keyof typeof scenarios;
