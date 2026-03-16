@@ -9,6 +9,7 @@ import {
 import { useJsonlPlayer } from '@/components/dojo/useJsonlPlayer';
 import { useA2UISurface } from '@/components/dojo/useA2UISurface';
 import { A2UIViewer } from '@copilotkit/a2ui-renderer';
+import { A2UIMarkdownProvider } from '@/components/dojo/A2UIMarkdownProvider';
 import { Button } from '@/components/ui/button';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import {
@@ -348,12 +349,14 @@ export default function DojoPage() {
                   <div className="flex-1 p-4 overflow-auto bg-dot-pattern custom-scrollbar">
                     {activeMessages.length > 0 ? (
                       <div className="w-full min-h-full flex items-start justify-center">
-                        <A2UIViewer
-                          root={surfaceState.root}
-                          components={surfaceState.components}
-                          data={surfaceState.data}
-                          onAction={(action) => console.log('Dojo Action:', action)}
-                        />
+                        <A2UIMarkdownProvider>
+                          <A2UIViewer
+                            root={surfaceState.root}
+                            components={surfaceState.components}
+                            data={surfaceState.data}
+                            onAction={(action) => console.log('Dojo Action:', action)}
+                          />
+                        </A2UIMarkdownProvider>
                       </div>
                     ) : (
                       <div className="flex flex-col items-center justify-center h-full text-center space-y-4">
