@@ -27,6 +27,7 @@ from a2a.types import (
     Part,
     TextPart,
 )
+from google.adk.agents import run_config
 from google.adk.agents.llm_agent import LlmAgent
 from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
@@ -45,7 +46,11 @@ from a2ui.core.schema.manager import A2uiSchemaManager
 from a2ui.core.parser.parser import parse_response, ResponsePart
 from a2ui.basic_catalog.provider import BasicCatalog
 from a2ui.core.schema.common_modifiers import remove_strict_validation
-from a2ui.a2a import create_a2ui_part, get_a2ui_agent_extension, parse_response_to_parts
+from a2ui.a2a import (
+    get_a2ui_agent_extension,
+    parse_response_to_parts,
+    stream_response_to_parts,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -71,6 +76,7 @@ class RestaurantAgent:
     )
     self._agent = self._build_agent(use_ui)
     self._user_id = "remote_agent"
+    self._parsers = {}
     self._runner = Runner(
         app_name=self._agent.name,
         agent=self._agent,
@@ -80,14 +86,17 @@ class RestaurantAgent:
     )
 
   def get_agent_card(self) -> AgentCard:
+    extensions = []
+    if self.use_ui:
+      extensions.append(
+          get_a2ui_agent_extension(
+              self._schema_manager.accepts_inline_catalogs,
+              self._schema_manager.supported_catalog_ids,
+          )
+      )
     capabilities = AgentCapabilities(
         streaming=True,
-        extensions=[
-            get_a2ui_agent_extension(
-                self._schema_manager.accepts_inline_catalogs,
-                self._schema_manager.supported_catalog_ids,
-            )
-        ],
+        extensions=extensions,
     )
     skill = AgentSkill(
         id="find_restaurants",
@@ -161,26 +170,28 @@ class RestaurantAgent:
     current_query_text = query
 
     # Ensure schema was loaded
-    selected_catalog = self._schema_manager.get_selected_catalog()
-    if self.use_ui and not selected_catalog.catalog_schema:
-      logger.error(
-          "--- RestaurantAgent.stream: A2UI_SCHEMA is not loaded. "
-          "Cannot perform UI validation. ---"
-      )
-      yield {
-          "is_task_complete": True,
-          "parts": [
-              Part(
-                  root=TextPart(
-                      text=(
-                          "I'm sorry, I'm facing an internal configuration error with"
-                          " my UI components. Please contact support."
-                      )
-                  )
-              )
-          ],
-      }
-      return
+    selected_catalog = None
+    if self.use_ui:
+      selected_catalog = self._schema_manager.get_selected_catalog()
+      if not selected_catalog.catalog_schema:
+        logger.error(
+            "--- RestaurantAgent.stream: A2UI_SCHEMA is not loaded. "
+            "Cannot perform UI validation. ---"
+        )
+        yield {
+            "is_task_complete": True,
+            "parts": [
+                Part(
+                    root=TextPart(
+                        text=(
+                            "I'm sorry, I'm facing an internal configuration error with"
+                            " my UI components. Please contact support."
+                        )
+                    )
+                )
+            ],
+        }
+        return
 
     while attempt <= max_retries:
       attempt += 1
@@ -192,45 +203,46 @@ class RestaurantAgent:
       current_message = types.Content(
           role="user", parts=[types.Part.from_text(text=current_query_text)]
       )
-      final_response_content = None
 
-      async for event in self._runner.run_async(
-          user_id=self._user_id,
-          session_id=session.id,
-          new_message=current_message,
-      ):
-        logger.info(f"Event from runner: {event}")
-        if event.is_final_response():
-          if event.content and event.content.parts and event.content.parts[0].text:
-            final_response_content = "\n".join(
-                [p.text for p in event.content.parts if p.text]
-            )
-          break  # Got the final response, stop consuming events
-        else:
-          logger.info(f"Intermediate event: {event}")
-          # Yield intermediate updates on every attempt
+      full_content_list = []
+
+      async def token_stream():
+        async for event in self._runner.run_async(
+            user_id=self._user_id,
+            session_id=session.id,
+            run_config=run_config.RunConfig(
+                streaming_mode=run_config.StreamingMode.SSE
+            ),
+            new_message=current_message,
+        ):
+          if event.content and event.content.parts:
+            for p in event.content.parts:
+              if p.text:
+                full_content_list.append(p.text)
+                yield p.text
+
+      if self.use_ui:
+        from a2ui.core.parser.streaming import A2uiStreamParser
+
+        if session_id not in self._parsers:
+          self._parsers[session_id] = A2uiStreamParser(catalog=selected_catalog)
+
+        async for part in stream_response_to_parts(
+            self._parsers[session_id],
+            token_stream(),
+        ):
           yield {
               "is_task_complete": False,
-              "updates": self.get_processing_message(),
+              "parts": [part],
+          }
+      else:
+        async for token in token_stream():
+          yield {
+              "is_task_complete": False,
+              "updates": token,
           }
 
-      if final_response_content is None:
-        logger.warning(
-            "--- RestaurantAgent.stream: Received no final response content from"
-            f" runner (Attempt {attempt}). ---"
-        )
-        if attempt <= max_retries:
-          current_query_text = (
-              "I received no response. Please try again."
-              f"Please retry the original request: '{query}'"
-          )
-          continue  # Go to next retry
-        else:
-          # Retries exhausted on no-response
-          final_response_content = (
-              "I'm sorry, I encountered an error and couldn't process your request."
-          )
-          # Fall through to send this as a text-only error
+      final_response_content = "".join(full_content_list)
 
       is_valid = False
       error_message = ""
