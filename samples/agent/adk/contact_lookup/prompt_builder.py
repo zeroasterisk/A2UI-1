@@ -22,6 +22,8 @@ ROLE_DESCRIPTION = (
 )
 
 WORKFLOW_DESCRIPTION = """
+- Data Before UI: Return data model updates (`updateDataModel` or `dataModelUpdate`) BEFORE surface updates.
+
 Buttons that represent the main action on a card or view (e.g., 'Follow', 'Email', 'Search') SHOULD include the `"primary": true` attribute.
 """
 

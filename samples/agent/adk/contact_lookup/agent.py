@@ -20,7 +20,7 @@ from typing import Any
 
 import jsonschema
 
-# Corrected imports from our new/refactored files
+from google.adk.agents import run_config
 from google.adk.agents.llm_agent import LlmAgent
 from google.adk.artifacts import InMemoryArtifactService
 from google.adk.memory.in_memory_memory_service import InMemoryMemoryService
@@ -43,7 +43,11 @@ from a2ui.core.schema.constants import VERSION_0_8, A2UI_OPEN_TAG, A2UI_CLOSE_TA
 from a2ui.core.schema.manager import A2uiSchemaManager
 from a2ui.core.parser.parser import parse_response, ResponsePart
 from a2ui.basic_catalog.provider import BasicCatalog
-from a2ui.a2a import create_a2ui_part, get_a2ui_agent_extension, parse_response_to_parts
+from a2ui.a2a import (
+    get_a2ui_agent_extension,
+    parse_response_to_parts,
+    stream_response_to_parts,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -68,6 +72,7 @@ class ContactAgent:
     )
     self._agent = self._build_agent(use_ui)
     self._user_id = "remote_agent"
+    self._parsers = {}
     self._runner = Runner(
         app_name=self._agent.name,
         agent=self._agent,
@@ -77,14 +82,18 @@ class ContactAgent:
     )
 
   def get_agent_card(self) -> AgentCard:
+    extensions = []
+    if self.use_ui:
+      extensions.append(
+          get_a2ui_agent_extension(
+              self._schema_manager.accepts_inline_catalogs,
+              self._schema_manager.supported_catalog_ids,
+          )
+      )
+
     capabilities = AgentCapabilities(
         streaming=True,
-        extensions=[
-            get_a2ui_agent_extension(
-                self._schema_manager.accepts_inline_catalogs,
-                self._schema_manager.supported_catalog_ids,
-            )
-        ],
+        extensions=extensions,
     )
     skill = AgentSkill(
         id="find_contact",
@@ -164,27 +173,29 @@ class ContactAgent:
     attempt = 0
     current_query_text = query
 
-    # Ensure catalog schema was loaded
-    selected_catalog = self._schema_manager.get_selected_catalog()
-    if self.use_ui and not selected_catalog.catalog_schema:
-      logger.error(
-          "--- ContactAgent.stream: A2UI_SCHEMA is not loaded. "
-          "Cannot perform UI validation. ---"
-      )
-      yield {
-          "is_task_complete": True,
-          "parts": [
-              Part(
-                  root=TextPart(
-                      text=(
-                          "I'm sorry, I'm facing an internal configuration error with"
-                          " my UI components. Please contact support."
-                      )
-                  )
-              )
-          ],
-      }
-      return
+    # Ensure catalog schema was loaded if UI is enabled
+    selected_catalog = None
+    if self.use_ui:
+      selected_catalog = self._schema_manager.get_selected_catalog()
+      if not selected_catalog.catalog_schema:
+        logger.error(
+            "--- ContactAgent.stream: A2UI_SCHEMA is not loaded. "
+            "Cannot perform UI validation. ---"
+        )
+        yield {
+            "is_task_complete": True,
+            "parts": [
+                Part(
+                    root=TextPart(
+                        text=(
+                            "I'm sorry, I'm facing an internal configuration error with"
+                            " my UI components. Please contact support."
+                        )
+                    )
+                )
+            ],
+        }
+        return
 
     while attempt <= max_retries:
       attempt += 1
@@ -196,27 +207,46 @@ class ContactAgent:
       current_message = types.Content(
           role="user", parts=[types.Part.from_text(text=current_query_text)]
       )
-      final_response_content = None
 
-      async for event in self._runner.run_async(
-          user_id=self._user_id,
-          session_id=session.id,
-          new_message=current_message,
-      ):
-        logger.info(f"Event from runner: {event}")
-        if event.is_final_response():
-          if event.content and event.content.parts and event.content.parts[0].text:
-            final_response_content = "\n".join(
-                [p.text for p in event.content.parts if p.text]
-            )
-          break  # Got the final response, stop consuming events
-        else:
-          logger.info(f"Intermediate event: {event}")
-          # Yield intermediate updates on every attempt
+      full_content_list = []
+
+      async def token_stream():
+        async for event in self._runner.run_async(
+            user_id=self._user_id,
+            session_id=session.id,
+            run_config=run_config.RunConfig(
+                streaming_mode=run_config.StreamingMode.SSE
+            ),
+            new_message=current_message,
+        ):
+          if event.content and event.content.parts:
+            for p in event.content.parts:
+              if p.text:
+                full_content_list.append(p.text)
+                yield p.text
+
+      if self.use_ui:
+        from a2ui.core.parser.streaming import A2uiStreamParser
+
+        if session_id not in self._parsers:
+          self._parsers[session_id] = A2uiStreamParser(catalog=selected_catalog)
+
+        async for part in stream_response_to_parts(
+            self._parsers[session_id],
+            token_stream(),
+        ):
           yield {
               "is_task_complete": False,
-              "updates": self.get_processing_message(),
+              "parts": [part],
           }
+      else:
+        async for token in token_stream():
+          yield {
+              "is_task_complete": False,
+              "updates": token,
+          }
+
+      final_response_content = "".join(full_content_list)
 
       if final_response_content is None:
         logger.warning(
@@ -228,8 +258,10 @@ class ContactAgent:
               "I received no response. Please try again."
               f"Please retry the original request: '{query}'"
           )
+          logger.info(f"Retrying with query: {current_query_text}")
           continue  # Go to next retry
         else:
+          logger.info("Retries exhausted on no-response")
           # Retries exhausted on no-response
           final_response_content = (
               "I'm sorry, I encountered an error and couldn't process your request."

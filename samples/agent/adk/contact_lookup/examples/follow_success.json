@@ -10,6 +10,28 @@
       "surfaceId": "contact-card",
       "components": [
         {
+          "id": "success_card",
+          "component": {
+            "Card": {
+              "child": "success_column"
+            }
+          }
+        },
+        {
+          "id": "success_column",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "success_icon",
+                  "success_text"
+                ]
+              },
+              "alignment": "center"
+            }
+          }
+        },
+        {
           "id": "success_icon",
           "component": {
             "Icon": {
@@ -29,28 +51,6 @@
                 "literalString": "Successfully Followed"
               },
               "usageHint": "h2"
-            }
-          }
-        },
-        {
-          "id": "success_column",
-          "component": {
-            "Column": {
-              "children": {
-                "explicitList": [
-                  "success_icon",
-                  "success_text"
-                ]
-              },
-              "alignment": "center"
-            }
-          }
-        },
-        {
-          "id": "success_card",
-          "component": {
-            "Card": {
-              "child": "success_column"
             }
           }
         }

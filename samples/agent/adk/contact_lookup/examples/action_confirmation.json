@@ -10,6 +10,22 @@
     }
   },
   {
+    "dataModelUpdate": {
+      "surfaceId": "action-modal",
+      "path": "/",
+      "contents": [
+        {
+          "key": "actionTitle",
+          "valueString": "Action Confirmation"
+        },
+        {
+          "key": "actionMessage",
+          "valueString": "Your action has been processed."
+        }
+      ]
+    }
+  },
+  {
     "surfaceUpdate": {
       "surfaceId": "action-modal",
       "components": [
@@ -69,16 +85,6 @@
           }
         },
         {
-          "id": "dismiss-button-text",
-          "component": {
-            "Text": {
-              "text": {
-                "literalString": "Dismiss"
-              }
-            }
-          }
-        },
-        {
           "id": "dismiss-button",
           "component": {
             "Button": {
@@ -89,22 +95,16 @@
               }
             }
           }
-        }
-      ]
-    }
-  },
-  {
-    "dataModelUpdate": {
-      "surfaceId": "action-modal",
-      "path": "/",
-      "contents": [
-        {
-          "key": "actionTitle",
-          "valueString": "Action Confirmation"
         },
         {
-          "key": "actionMessage",
-          "valueString": "Your action has been processed."
+          "id": "dismiss-button-text",
+          "component": {
+            "Text": {
+              "text": {
+                "literalString": "Dismiss"
+              }
+            }
+          }
         }
       ]
     }
