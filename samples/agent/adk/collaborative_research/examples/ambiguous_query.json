@@ -1,0 +1,1105 @@
+[
+  {
+    "beginRendering": {
+      "surfaceId": "research-status",
+      "root": "status-column"
+    }
+  },
+  {
+    "surfaceUpdate": {
+      "surfaceId": "research-status",
+      "components": [
+        {
+          "id": "status-column",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "status-title",
+                  "understood-card",
+                  "search-progress",
+                  "status-summary"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "status-title",
+          "component": {
+            "Text": {
+              "text": { "literalString": "🔍 Researching your query..." },
+              "usageHint": "h3"
+            }
+          }
+        },
+        {
+          "id": "understood-card",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": [
+                  "understood-label",
+                  "fact-topic",
+                  "fact-person",
+                  "fact-type",
+                  "gap-label",
+                  "gap-name",
+                  "gap-date"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "understood-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Here's what I understood:" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "fact-topic",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["fact-topic-icon", "fact-topic-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "fact-topic-icon",
+          "component": {
+            "Text": { "text": { "literalString": "✅" } }
+          }
+        },
+        {
+          "id": "fact-topic-text",
+          "component": {
+            "Text": { "text": { "literalString": "Topic: payments" } }
+          }
+        },
+        {
+          "id": "fact-person",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["fact-person-icon", "fact-person-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "fact-person-icon",
+          "component": {
+            "Text": { "text": { "literalString": "✅" } }
+          }
+        },
+        {
+          "id": "fact-person-text",
+          "component": {
+            "Text": { "text": { "literalString": "Person: from Austin" } }
+          }
+        },
+        {
+          "id": "fact-type",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["fact-type-icon", "fact-type-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "fact-type-icon",
+          "component": {
+            "Text": { "text": { "literalString": "✅" } }
+          }
+        },
+        {
+          "id": "fact-type-text",
+          "component": {
+            "Text": { "text": { "literalString": "Type: meeting" } }
+          }
+        },
+        {
+          "id": "gap-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Still figuring out:" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "gap-name",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["gap-name-icon", "gap-name-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "gap-name-icon",
+          "component": {
+            "Text": { "text": { "literalString": "❓" } }
+          }
+        },
+        {
+          "id": "gap-name-text",
+          "component": {
+            "Text": { "text": { "literalString": "Person's name" } }
+          }
+        },
+        {
+          "id": "gap-date",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["gap-date-icon", "gap-date-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "gap-date-icon",
+          "component": {
+            "Text": { "text": { "literalString": "❓" } }
+          }
+        },
+        {
+          "id": "gap-date-text",
+          "component": {
+            "Text": { "text": { "literalString": "Which specific meeting" } }
+          }
+        },
+        {
+          "id": "search-progress",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "search-label",
+                  "src-contacts",
+                  "src-calendar",
+                  "src-documents"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "search-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Searching..." },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "src-contacts",
+          "component": {
+            "Text": { "text": { "path": "/sources/contacts" } }
+          }
+        },
+        {
+          "id": "src-calendar",
+          "component": {
+            "Text": { "text": { "path": "/sources/calendar" } }
+          }
+        },
+        {
+          "id": "src-documents",
+          "component": {
+            "Text": { "text": { "path": "/sources/documents" } }
+          }
+        },
+        {
+          "id": "status-summary",
+          "component": {
+            "Text": {
+              "text": { "path": "/statusSummary" },
+              "usageHint": "caption"
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-status",
+      "contents": {
+        "valueMap": {
+          "sources": {
+            "contacts": "⏳ Contacts — Searching for people in Austin...",
+            "calendar": "⏳ Calendar — Scanning recent meetings...",
+            "documents": "⬚ Documents — Queued"
+          },
+          "statusSummary": "0 of 3 sources checked"
+        }
+      }
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-status",
+      "contents": {
+        "valueMap": {
+          "sources": {
+            "contacts": "✅ Contacts — Found 1 match: Marcus Chen (Austin)",
+            "calendar": "⏳ Calendar — Scanning recent meetings...",
+            "documents": "⬚ Documents — Queued"
+          },
+          "statusSummary": "1 of 3 sources checked"
+        }
+      }
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-status",
+      "contents": {
+        "valueMap": {
+          "sources": {
+            "contacts": "✅ Contacts — Found 1 match: Marcus Chen (Austin)",
+            "calendar": "✅ Calendar — Found 3 meetings about payments",
+            "documents": "⏳ Documents — Searching..."
+          },
+          "statusSummary": "2 of 3 sources checked"
+        }
+      }
+    }
+  },
+  {
+    "beginRendering": {
+      "surfaceId": "research-artifact",
+      "root": "artifact-column"
+    }
+  },
+  {
+    "surfaceUpdate": {
+      "surfaceId": "research-artifact",
+      "components": [
+        {
+          "id": "artifact-column",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "artifact-title",
+                  "contact-card",
+                  "contact-actions"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "artifact-title",
+          "component": {
+            "Text": {
+              "text": { "literalString": "🔍 Research: \"payments meeting, guy from Austin\"" },
+              "usageHint": "h3"
+            }
+          }
+        },
+        {
+          "id": "contact-card",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": [
+                  "contact-header-row",
+                  "contact-divider",
+                  "contact-details"
+                ]
+              },
+              "elevation": 2
+            }
+          }
+        },
+        {
+          "id": "contact-header-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["contact-avatar", "contact-info-col"]
+              },
+              "alignment": "center"
+            }
+          }
+        },
+        {
+          "id": "contact-avatar",
+          "component": {
+            "Image": {
+              "url": { "path": "/contact/imageUrl" },
+              "usageHint": "avatar",
+              "fit": "cover"
+            }
+          }
+        },
+        {
+          "id": "contact-info-col",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": ["contact-name", "contact-title-text", "contact-team-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "contact-name",
+          "component": {
+            "Text": {
+              "text": { "path": "/contact/name" },
+              "usageHint": "h2"
+            }
+          }
+        },
+        {
+          "id": "contact-title-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/title" } }
+          }
+        },
+        {
+          "id": "contact-team-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/teamLocation" } }
+          }
+        },
+        {
+          "id": "contact-divider",
+          "component": { "Divider": {} }
+        },
+        {
+          "id": "contact-details",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": ["email-row", "phone-row", "location-row"]
+              }
+            }
+          }
+        },
+        {
+          "id": "email-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["email-icon", "email-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "email-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "mail" } }
+          }
+        },
+        {
+          "id": "email-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/email" } }
+          }
+        },
+        {
+          "id": "phone-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["phone-icon", "phone-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "phone-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "phone" } }
+          }
+        },
+        {
+          "id": "phone-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/phone" } }
+          }
+        },
+        {
+          "id": "location-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["loc-icon", "loc-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "loc-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "locationOn" } }
+          }
+        },
+        {
+          "id": "loc-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/location" } }
+          }
+        },
+        {
+          "id": "contact-actions",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["btn-email", "btn-schedule", "btn-more"]
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-email",
+          "component": {
+            "Button": {
+              "label": { "literalString": "✉️ Email Marcus" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "action-email",
+                "data": { "contactId": "c1" }
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-schedule",
+          "component": {
+            "Button": {
+              "label": { "literalString": "📅 Schedule" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "action-schedule",
+                "data": { "contactId": "c1" }
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-more",
+          "component": {
+            "Button": {
+              "label": { "literalString": "🔍 More details" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "expand-detail",
+                "data": { "section": "contact" }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-artifact",
+      "contents": {
+        "valueMap": {
+          "contact": {
+            "name": "Marcus Chen",
+            "title": "Senior Engineer",
+            "teamLocation": "FinTech · Austin, TX",
+            "email": "m.chen@company.com",
+            "phone": "+1-512-555-0142",
+            "location": "Austin, TX",
+            "imageUrl": "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus"
+          }
+        }
+      }
+    }
+  },
+  {
+    "beginRendering": {
+      "surfaceId": "research-clarification",
+      "root": "clarify-column"
+    }
+  },
+  {
+    "surfaceUpdate": {
+      "surfaceId": "research-clarification",
+      "components": [
+        {
+          "id": "clarify-column",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "clarify-prompt",
+                  "option-1",
+                  "option-2",
+                  "option-3",
+                  "none-row"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "clarify-prompt",
+          "component": {
+            "Text": {
+              "text": { "literalString": "I found 3 meetings about payments with Marcus. Which one?" },
+              "usageHint": "h4"
+            }
+          }
+        },
+        {
+          "id": "option-1",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": ["opt1-title", "opt1-detail", "opt1-btn"]
+              }
+            }
+          }
+        },
+        {
+          "id": "opt1-title",
+          "component": {
+            "Text": {
+              "text": { "path": "/options/0/title" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "opt1-detail",
+          "component": {
+            "Text": { "text": { "path": "/options/0/detail" } }
+          }
+        },
+        {
+          "id": "opt1-btn",
+          "component": {
+            "Button": {
+              "label": { "literalString": "This one" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "select-hypothesis",
+                "data": { "meetingId": "m1" }
+              }
+            }
+          }
+        },
+        {
+          "id": "option-2",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": ["opt2-title", "opt2-detail", "opt2-btn"]
+              }
+            }
+          }
+        },
+        {
+          "id": "opt2-title",
+          "component": {
+            "Text": {
+              "text": { "path": "/options/1/title" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "opt2-detail",
+          "component": {
+            "Text": { "text": { "path": "/options/1/detail" } }
+          }
+        },
+        {
+          "id": "opt2-btn",
+          "component": {
+            "Button": {
+              "label": { "literalString": "This one" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "select-hypothesis",
+                "data": { "meetingId": "m2" }
+              }
+            }
+          }
+        },
+        {
+          "id": "option-3",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": ["opt3-title", "opt3-detail", "opt3-btn"]
+              }
+            }
+          }
+        },
+        {
+          "id": "opt3-title",
+          "component": {
+            "Text": {
+              "text": { "path": "/options/2/title" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "opt3-detail",
+          "component": {
+            "Text": { "text": { "path": "/options/2/detail" } }
+          }
+        },
+        {
+          "id": "opt3-btn",
+          "component": {
+            "Button": {
+              "label": { "literalString": "This one" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "select-hypothesis",
+                "data": { "meetingId": "m3" }
+              }
+            }
+          }
+        },
+        {
+          "id": "none-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["btn-none", "btn-broader"]
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-none",
+          "component": {
+            "Button": {
+              "label": { "literalString": "None of these" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "reject-all",
+                "data": {}
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-broader",
+          "component": {
+            "Button": {
+              "label": { "literalString": "Search more broadly" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "broaden-search",
+                "data": {}
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-clarification",
+      "contents": {
+        "valueMap": {
+          "options": [
+            {
+              "id": "m1",
+              "title": "📅 Payments Integration Review",
+              "detail": "Feb 15, 2:00 PM — with Marcus Chen, Sarah Lee, Priya Sharma"
+            },
+            {
+              "id": "m2",
+              "title": "📅 Q3 Payment Gateway Planning",
+              "detail": "Feb 22, 10:00 AM — with Marcus Chen, Priya Sharma"
+            },
+            {
+              "id": "m3",
+              "title": "📅 Payment Fraud Review",
+              "detail": "Mar 1, 3:00 PM — with Alex Torres, Priya Sharma"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-status",
+      "contents": {
+        "valueMap": {
+          "sources": {
+            "contacts": "✅ Contacts — Marcus Chen (Austin, FinTech)",
+            "calendar": "✅ Calendar — 3 meetings found (needs disambiguation)",
+            "documents": "✅ Documents — 2 related docs found"
+          },
+          "statusSummary": "✅ All sources checked — awaiting your selection"
+        }
+      }
+    }
+  },
+  {
+    "surfaceUpdate": {
+      "surfaceId": "research-artifact",
+      "components": [
+        {
+          "id": "artifact-column",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "artifact-title",
+                  "contact-card",
+                  "meeting-card",
+                  "meeting-actions"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "artifact-title",
+          "component": {
+            "Text": {
+              "text": { "literalString": "🔍 Research Complete" },
+              "usageHint": "h3"
+            }
+          }
+        },
+        {
+          "id": "contact-card",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": [
+                  "contact-header-row",
+                  "contact-divider",
+                  "contact-details"
+                ]
+              },
+              "elevation": 2
+            }
+          }
+        },
+        {
+          "id": "contact-header-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["contact-avatar", "contact-info-col"]
+              },
+              "alignment": "center"
+            }
+          }
+        },
+        {
+          "id": "contact-avatar",
+          "component": {
+            "Image": {
+              "url": { "path": "/contact/imageUrl" },
+              "usageHint": "avatar",
+              "fit": "cover"
+            }
+          }
+        },
+        {
+          "id": "contact-info-col",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": ["contact-name", "contact-title-text", "contact-team-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "contact-name",
+          "component": {
+            "Text": {
+              "text": { "path": "/contact/name" },
+              "usageHint": "h2"
+            }
+          }
+        },
+        {
+          "id": "contact-title-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/title" } }
+          }
+        },
+        {
+          "id": "contact-team-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/teamLocation" } }
+          }
+        },
+        {
+          "id": "contact-divider",
+          "component": { "Divider": {} }
+        },
+        {
+          "id": "contact-details",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": ["email-row", "phone-row", "location-row"]
+              }
+            }
+          }
+        },
+        {
+          "id": "email-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["email-icon", "email-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "email-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "mail" } }
+          }
+        },
+        {
+          "id": "email-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/email" } }
+          }
+        },
+        {
+          "id": "phone-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["phone-icon", "phone-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "phone-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "phone" } }
+          }
+        },
+        {
+          "id": "phone-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/phone" } }
+          }
+        },
+        {
+          "id": "location-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["loc-icon", "loc-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "loc-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "locationOn" } }
+          }
+        },
+        {
+          "id": "loc-text",
+          "component": {
+            "Text": { "text": { "path": "/contact/location" } }
+          }
+        },
+        {
+          "id": "meeting-card",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": [
+                  "meeting-title",
+                  "meeting-datetime",
+                  "meeting-divider",
+                  "meeting-attendees-label",
+                  "meeting-attendees",
+                  "meeting-divider-2",
+                  "meeting-notes-label",
+                  "meeting-notes",
+                  "meeting-actions-label",
+                  "meeting-action-items"
+                ]
+              },
+              "elevation": 2
+            }
+          }
+        },
+        {
+          "id": "meeting-title",
+          "component": {
+            "Text": {
+              "text": { "path": "/meeting/title" },
+              "usageHint": "h2"
+            }
+          }
+        },
+        {
+          "id": "meeting-datetime",
+          "component": {
+            "Text": {
+              "text": { "path": "/meeting/datetime" },
+              "usageHint": "subtitle1"
+            }
+          }
+        },
+        {
+          "id": "meeting-divider",
+          "component": { "Divider": {} }
+        },
+        {
+          "id": "meeting-attendees-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Attendees" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "meeting-attendees",
+          "component": {
+            "Text": { "text": { "path": "/meeting/attendeesText" } }
+          }
+        },
+        {
+          "id": "meeting-divider-2",
+          "component": { "Divider": {} }
+        },
+        {
+          "id": "meeting-notes-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Key Points" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "meeting-notes",
+          "component": {
+            "Text": { "text": { "path": "/meeting/notes" } }
+          }
+        },
+        {
+          "id": "meeting-actions-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Action Items" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "meeting-action-items",
+          "component": {
+            "Text": { "text": { "path": "/meeting/actionItemsText" } }
+          }
+        },
+        {
+          "id": "meeting-actions",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["btn-related-docs", "btn-attendees", "btn-email"]
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-related-docs",
+          "component": {
+            "Button": {
+              "label": { "literalString": "📄 Related docs" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "expand-detail",
+                "data": { "section": "documents" }
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-attendees",
+          "component": {
+            "Button": {
+              "label": { "literalString": "👥 Attendee details" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "expand-detail",
+                "data": { "section": "attendees" }
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-email",
+          "component": {
+            "Button": {
+              "label": { "literalString": "✉️ Email Marcus" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "action-email",
+                "data": { "contactId": "c1" }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-artifact",
+      "contents": {
+        "valueMap": {
+          "contact": {
+            "name": "Marcus Chen",
+            "title": "Senior Engineer",
+            "teamLocation": "FinTech · Austin, TX",
+            "email": "m.chen@company.com",
+            "phone": "+1-512-555-0142",
+            "location": "Austin, TX",
+            "imageUrl": "https://api.dicebear.com/7.x/avataaars/svg?seed=Marcus"
+          },
+          "meeting": {
+            "title": "📋 Payments Integration Review",
+            "datetime": "February 15, 2026 · 2:00 PM — 3:00 PM · Zoom",
+            "attendeesText": "You, Marcus Chen, Sarah Lee, Priya Sharma",
+            "notes": "• Discussed Stripe migration timeline — target Q3 2026\n• PCI compliance requirements reviewed\n• Marcus demonstrated new API spec draft\n• Budget: $50K approved for integration",
+            "actionItemsText": "• Marcus: Send updated API specs by Feb 20\n• Priya: Draft migration timeline\n• You: Review PCI checklist"
+          }
+        }
+      }
+    }
+  }
+]

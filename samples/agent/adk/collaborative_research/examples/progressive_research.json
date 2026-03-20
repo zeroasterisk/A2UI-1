@@ -1,0 +1,643 @@
+[
+  {
+    "beginRendering": {
+      "surfaceId": "research-status",
+      "root": "status-column"
+    }
+  },
+  {
+    "surfaceUpdate": {
+      "surfaceId": "research-status",
+      "components": [
+        {
+          "id": "status-column",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "status-title",
+                  "query-card",
+                  "progress-col"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "status-title",
+          "component": {
+            "Text": {
+              "text": { "literalString": "🔍 Deep Research: Finding Sarah's Q3 Budget Proposal" },
+              "usageHint": "h3"
+            }
+          }
+        },
+        {
+          "id": "query-card",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": [
+                  "query-label",
+                  "query-text",
+                  "parsed-facts"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "query-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Your query:" },
+              "usageHint": "caption"
+            }
+          }
+        },
+        {
+          "id": "query-text",
+          "component": {
+            "Text": {
+              "text": { "literalString": "\"Find the proposal Sarah sent about the Q3 budget thing\"" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "parsed-facts",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "fact-person-sarah",
+                  "fact-type-proposal",
+                  "fact-topic-budget"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "fact-person-sarah",
+          "component": {
+            "Text": { "text": { "literalString": "✅ Person: Sarah (name only — multiple matches possible)" } }
+          }
+        },
+        {
+          "id": "fact-type-proposal",
+          "component": {
+            "Text": { "text": { "literalString": "✅ Document type: proposal" } }
+          }
+        },
+        {
+          "id": "fact-topic-budget",
+          "component": {
+            "Text": { "text": { "literalString": "✅ Topic: Q3 budget" } }
+          }
+        },
+        {
+          "id": "progress-col",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "src-contacts-status",
+                  "src-docs-status",
+                  "src-calendar-status"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "src-contacts-status",
+          "component": {
+            "Text": { "text": { "path": "/sources/contacts" } }
+          }
+        },
+        {
+          "id": "src-docs-status",
+          "component": {
+            "Text": { "text": { "path": "/sources/documents" } }
+          }
+        },
+        {
+          "id": "src-calendar-status",
+          "component": {
+            "Text": { "text": { "path": "/sources/calendar" } }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-status",
+      "contents": {
+        "valueMap": {
+          "sources": {
+            "contacts": "⏳ Contacts — Searching for \"Sarah\"...",
+            "documents": "⏳ Documents — Searching for Q3 budget proposals...",
+            "calendar": "⬚ Calendar — Queued"
+          }
+        }
+      }
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-status",
+      "contents": {
+        "valueMap": {
+          "sources": {
+            "contacts": "✅ Contacts — Found 2 matches: Sarah Lee (Finance), Sarah Kim (Ops)",
+            "documents": "⏳ Documents — Searching for Q3 budget proposals...",
+            "calendar": "⬚ Calendar — Queued"
+          }
+        }
+      }
+    }
+  },
+  {
+    "beginRendering": {
+      "surfaceId": "research-clarification",
+      "root": "clarify-sarah"
+    }
+  },
+  {
+    "surfaceUpdate": {
+      "surfaceId": "research-clarification",
+      "components": [
+        {
+          "id": "clarify-sarah",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "clarify-title",
+                  "sarah-option-1",
+                  "sarah-option-2",
+                  "sarah-none"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "clarify-title",
+          "component": {
+            "Text": {
+              "text": { "literalString": "I found two people named Sarah. Which one?" },
+              "usageHint": "h4"
+            }
+          }
+        },
+        {
+          "id": "sarah-option-1",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": ["s1-row", "s1-btn"]
+              }
+            }
+          }
+        },
+        {
+          "id": "s1-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["s1-avatar", "s1-info"]
+              },
+              "alignment": "center"
+            }
+          }
+        },
+        {
+          "id": "s1-avatar",
+          "component": {
+            "Image": {
+              "url": { "literalString": "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" },
+              "usageHint": "avatar",
+              "fit": "cover"
+            }
+          }
+        },
+        {
+          "id": "s1-info",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": ["s1-name", "s1-title"]
+              }
+            }
+          }
+        },
+        {
+          "id": "s1-name",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Sarah Lee" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "s1-title",
+          "component": {
+            "Text": { "text": { "literalString": "Finance Director · New York, NY" } }
+          }
+        },
+        {
+          "id": "s1-btn",
+          "component": {
+            "Button": {
+              "label": { "literalString": "This Sarah" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "select-hypothesis",
+                "data": { "contactId": "c2", "name": "Sarah Lee" }
+              }
+            }
+          }
+        },
+        {
+          "id": "sarah-option-2",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": ["s2-row", "s2-btn"]
+              }
+            }
+          }
+        },
+        {
+          "id": "s2-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["s2-avatar", "s2-info"]
+              },
+              "alignment": "center"
+            }
+          }
+        },
+        {
+          "id": "s2-avatar",
+          "component": {
+            "Image": {
+              "url": { "literalString": "https://api.dicebear.com/7.x/avataaars/svg?seed=SarahK" },
+              "usageHint": "avatar",
+              "fit": "cover"
+            }
+          }
+        },
+        {
+          "id": "s2-info",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": ["s2-name", "s2-title"]
+              }
+            }
+          }
+        },
+        {
+          "id": "s2-name",
+          "component": {
+            "Text": {
+              "text": { "literalString": "Sarah Kim" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "s2-title",
+          "component": {
+            "Text": { "text": { "literalString": "Operations Lead · San Francisco, CA" } }
+          }
+        },
+        {
+          "id": "s2-btn",
+          "component": {
+            "Button": {
+              "label": { "literalString": "This Sarah" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "select-hypothesis",
+                "data": { "contactId": "c3", "name": "Sarah Kim" }
+              }
+            }
+          }
+        },
+        {
+          "id": "sarah-none",
+          "component": {
+            "Button": {
+              "label": { "literalString": "Neither — search by last name" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "reject-all",
+                "data": {}
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-status",
+      "contents": {
+        "valueMap": {
+          "sources": {
+            "contacts": "✅ Contacts — Awaiting disambiguation (2 Sarahs)",
+            "documents": "✅ Documents — Found 1 proposal matching \"Q3 budget\"",
+            "calendar": "✅ Calendar — Found 1 meeting about Q3 budget with Sarah Lee"
+          }
+        }
+      }
+    }
+  },
+  {
+    "beginRendering": {
+      "surfaceId": "research-artifact",
+      "root": "artifact-col"
+    }
+  },
+  {
+    "surfaceUpdate": {
+      "surfaceId": "research-artifact",
+      "components": [
+        {
+          "id": "artifact-col",
+          "component": {
+            "Column": {
+              "children": {
+                "explicitList": [
+                  "artifact-title",
+                  "doc-card",
+                  "meeting-context-card",
+                  "artifact-actions"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "artifact-title",
+          "component": {
+            "Text": {
+              "text": { "literalString": "📄 Research: Sarah's Q3 Budget Proposal" },
+              "usageHint": "h3"
+            }
+          }
+        },
+        {
+          "id": "doc-card",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": [
+                  "doc-icon-title-row",
+                  "doc-divider",
+                  "doc-author-row",
+                  "doc-date-row",
+                  "doc-summary",
+                  "doc-tags-row"
+                ]
+              },
+              "elevation": 2
+            }
+          }
+        },
+        {
+          "id": "doc-icon-title-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["doc-icon", "doc-title"]
+              },
+              "alignment": "center"
+            }
+          }
+        },
+        {
+          "id": "doc-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "description" } }
+          }
+        },
+        {
+          "id": "doc-title",
+          "component": {
+            "Text": {
+              "text": { "path": "/document/title" },
+              "usageHint": "h2"
+            }
+          }
+        },
+        {
+          "id": "doc-divider",
+          "component": { "Divider": {} }
+        },
+        {
+          "id": "doc-author-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["doc-author-icon", "doc-author-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "doc-author-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "person" } }
+          }
+        },
+        {
+          "id": "doc-author-text",
+          "component": {
+            "Text": { "text": { "path": "/document/author" } }
+          }
+        },
+        {
+          "id": "doc-date-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["doc-date-icon", "doc-date-text"]
+              }
+            }
+          }
+        },
+        {
+          "id": "doc-date-icon",
+          "component": {
+            "Icon": { "name": { "literalString": "calendarToday" } }
+          }
+        },
+        {
+          "id": "doc-date-text",
+          "component": {
+            "Text": { "text": { "path": "/document/date" } }
+          }
+        },
+        {
+          "id": "doc-summary",
+          "component": {
+            "Text": { "text": { "path": "/document/summary" } }
+          }
+        },
+        {
+          "id": "doc-tags-row",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["tag-1", "tag-2", "tag-3"]
+              }
+            }
+          }
+        },
+        {
+          "id": "tag-1",
+          "component": {
+            "Button": {
+              "label": { "literalString": "budget" },
+              "style": "outlined"
+            }
+          }
+        },
+        {
+          "id": "tag-2",
+          "component": {
+            "Button": {
+              "label": { "literalString": "Q3" },
+              "style": "outlined"
+            }
+          }
+        },
+        {
+          "id": "tag-3",
+          "component": {
+            "Button": {
+              "label": { "literalString": "finance" },
+              "style": "outlined"
+            }
+          }
+        },
+        {
+          "id": "meeting-context-card",
+          "component": {
+            "Card": {
+              "children": {
+                "explicitList": [
+                  "context-label",
+                  "context-meeting-title",
+                  "context-meeting-detail"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "context-label",
+          "component": {
+            "Text": {
+              "text": { "literalString": "📅 Related Meeting" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "context-meeting-title",
+          "component": {
+            "Text": {
+              "text": { "path": "/relatedMeeting/title" },
+              "usageHint": "h5"
+            }
+          }
+        },
+        {
+          "id": "context-meeting-detail",
+          "component": {
+            "Text": { "text": { "path": "/relatedMeeting/detail" } }
+          }
+        },
+        {
+          "id": "artifact-actions",
+          "component": {
+            "Row": {
+              "children": {
+                "explicitList": ["btn-open-doc", "btn-meeting-details", "btn-email-sarah"]
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-open-doc",
+          "component": {
+            "Button": {
+              "label": { "literalString": "📄 Open document" },
+              "style": "filled",
+              "clientEvent": {
+                "eventId": "open-link",
+                "data": { "url": "https://docs.google.com/doc/d/fake-q3-budget" }
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-meeting-details",
+          "component": {
+            "Button": {
+              "label": { "literalString": "📅 Meeting details" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "expand-detail",
+                "data": { "section": "meeting", "meetingId": "m5" }
+              }
+            }
+          }
+        },
+        {
+          "id": "btn-email-sarah",
+          "component": {
+            "Button": {
+              "label": { "literalString": "✉️ Email Sarah" },
+              "style": "outlined",
+              "clientEvent": {
+                "eventId": "action-email",
+                "data": { "contactId": "c2" }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "dataModelUpdate": {
+      "surfaceId": "research-artifact",
+      "contents": {
+        "valueMap": {
+          "document": {
+            "title": "Q3 Budget Reallocation Proposal",
+            "author": "Sarah Lee — Finance Director",
+            "date": "February 20, 2026",
+            "summary": "Proposes moving $200K from legacy system maintenance to new platform development. Covers risk analysis, timeline, and expected ROI of 3x over 18 months. Needs VP approval.",
+            "link": "https://docs.google.com/doc/d/fake-q3-budget"
+          },
+          "relatedMeeting": {
+            "title": "Q3 Budget Reallocation",
+            "detail": "Feb 22, 4:00 PM — You and Sarah Lee discussed the proposal. Action: You to review and sign off."
+          }
+        }
+      }
+    }
+  }
+]
