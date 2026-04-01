@@ -82,9 +82,9 @@ MCP is a stateful session protocol, so the most efficient approach is to declare
     "capabilities": {
       "a2ui": {
         "clientCapabilities": {
-          "v0.10": {
+          "v0.9": {
             "supportedCatalogIds": [
-              "https://a2ui.org/specification/v0_10/basic_catalog.json"
+              "https://a2ui.org/specification/v0_9/basic_catalog.json"
             ]
           }
         }
@@ -111,9 +111,9 @@ If your server must remain stateless, the client can pass A2UI capabilities in t
     "_meta": {
       "a2ui": {
         "clientCapabilities": {
-          "v0.10": {
+          "v0.9": {
             "supportedCatalogIds": [
-              "https://a2ui.org/specification/v0_10/basic_catalog.json"
+              "https://a2ui.org/specification/v0_9/basic_catalog.json"
             ],
             "inlineCatalogs": []
           }
@@ -142,14 +142,14 @@ def get_hello_world_ui():
     """Returns a simple A2UI hello world interface."""
     a2ui_payload = [
         {
-            "version": "v0.10",
+            "version": "v0.9",
             "createSurface": {
                 "surfaceId": "default",
-                "catalogId": "https://a2ui.org/specification/v0_10/basic_catalog.json"
+                "catalogId": "https://a2ui.org/specification/v0_9/basic_catalog.json"
             }
         },
         {
-            "version": "v0.10",
+            "version": "v0.9",
             "updateComponents": {
                 "surfaceId": "default",
                 "components": [
