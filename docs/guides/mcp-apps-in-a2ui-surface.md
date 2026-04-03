@@ -149,7 +149,7 @@ uv run .
 
 > ⚠️ **Python version**: This agent requires Python ≥ 3.13 (see its `pyproject.toml`). If `uv run .` fails with a Python version error, ensure you have Python 3.13+ available.
 
-The agent starts on `http://localhost:8080` by default.
+The agent starts on `http://localhost:10003` by default.
 
 #### Step 2: Build the Lit Renderer
 
@@ -206,7 +206,7 @@ export GEMINI_API_KEY="your-key"  # or use a .env file
 uv run .
 ```
 
-The proxy agent starts on `http://localhost:8080` by default.
+The proxy agent starts on `http://localhost:10006` by default.
 
 #### Step 3: Build and Start the Angular Client
 
@@ -214,12 +214,16 @@ In a **new terminal**:
 
 ```bash
 cd samples/client/angular/
+
+# Build the renderers (required — Angular depends on local renderer packages)
+npm run build:renderer
+
 npm install
 npm run build:sandbox
 npm start -- mcp_calculator
 ```
 
-> ⚠️ **`build:sandbox` is required**: This step bundles the sandbox proxy (`sandbox.html` and `sandbox.js`) into the Angular project's public assets. Without it, the MCP app iframe won't load.
+> ⚠️ **`build:renderer` and `build:sandbox` are both required**: This step bundles the sandbox proxy (`sandbox.html` and `sandbox.js`) into the Angular project's public assets. Without it, the MCP app iframe won't load.
 
 The client starts at `http://localhost:4200/`.
 
@@ -256,5 +260,5 @@ http://localhost:4200/?disable_security_self_test=true
 | Python version error on `contact_lookup` agent | Install Python 3.13+ (required by that sample's `pyproject.toml`) |
 | `npm run build:renderer` fails | Make sure you ran `npm install` first in `samples/client/lit/` |
 | Angular client shows blank page | Ensure you ran `npm run build:sandbox` before `npm start` |
-| MCP app iframe doesn't load | Check that both the MCP server (port 8000) and proxy agent (port 8080) are running |
+| MCP app iframe doesn't load | Check that both the MCP server (port 8000) and proxy agent (port 10006) are running |
 | Security self-test fails in dev | Add `?disable_security_self_test=true` to the URL |
