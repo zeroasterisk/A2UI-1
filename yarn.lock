@@ -426,6 +426,23 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@a2ui/storybook-addon@workspace:tools/storybook-addon-a2ui":
+  version: 0.0.0-use.local
+  resolution: "@a2ui/storybook-addon@workspace:tools/storybook-addon-a2ui"
+  dependencies:
+    "@types/node": "npm:^25.9.3"
+    "@types/react": "npm:^19.2.17"
+    "@types/react-dom": "npm:^19.2.3"
+    eslint: "npm:^10.4.1"
+    prettier: "npm:^3.8.4"
+    typescript: "npm:5.9.3"
+    wireit: "npm:^0.15.0-pre.2"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  languageName: unknown
+  linkType: soft
+
 "@a2ui/visual-parity@workspace:renderers/react/visual-parity":
   version: 0.0.0-use.local
   resolution: "@a2ui/visual-parity@workspace:renderers/react/visual-parity"
