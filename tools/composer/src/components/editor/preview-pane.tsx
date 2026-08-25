@@ -17,9 +17,10 @@
 'use client';
 
 import {useState, Component, type ReactNode} from 'react';
-import {Moon, Sun, AlertTriangle} from 'lucide-react';
+import {Moon, Sun, AlertTriangle, Layers, Palette} from 'lucide-react';
 import {Button} from '@/components/ui/button';
 import {A2UIViewer} from '@/lib/a2ui';
+import {StorybookPreviewBridge} from './storybook-preview-bridge';
 import type {A2UIComponent, SpecVersion} from '@/types/widget';
 
 /**
@@ -72,8 +73,11 @@ interface PreviewPaneProps {
   specVersion?: SpecVersion;
 }
 
+export type PreviewMode = 'native' | 'storybook';
+
 export function PreviewPane({root, components, data, specVersion}: PreviewPaneProps) {
   const [isDark, setIsDark] = useState(false);
+  const [previewMode, setPreviewMode] = useState<PreviewMode>('native');
 
   // Reset key changes when components change, clearing the error boundary
   const resetKey = JSON.stringify(components);
@@ -82,7 +86,30 @@ export function PreviewPane({root, components, data, specVersion}: PreviewPanePr
     <div
       className={`flex h-full flex-col border-l border-border ${isDark ? 'bg-neutral-900' : 'bg-neutral-50'}`}
     >
-      <div className="flex justify-end p-2">
+      <div className="flex items-center justify-between p-2 border-b border-border bg-background/50">
+        {/* Preview Mode Switcher */}
+        <div className="flex items-center gap-1 bg-muted/60 p-0.5 rounded-lg border border-border">
+          <Button
+            variant={previewMode === 'native' ? 'secondary' : 'ghost'}
+            size="sm"
+            className="h-7 px-2.5 text-xs font-medium gap-1.5 shadow-none"
+            onClick={() => setPreviewMode('native')}
+          >
+            <Layers className="h-3.5 w-3.5" />
+            Native A2UI
+          </Button>
+          <Button
+            variant={previewMode === 'storybook' ? 'secondary' : 'ghost'}
+            size="sm"
+            className="h-7 px-2.5 text-xs font-medium gap-1.5 shadow-none"
+            onClick={() => setPreviewMode('storybook')}
+          >
+            <Palette className="h-3.5 w-3.5" />
+            Storybook Canvas
+          </Button>
+        </div>
+
+        {/* Theme Toggle */}
         <Button
           variant="ghost"
           size="icon"
@@ -96,16 +123,30 @@ export function PreviewPane({root, components, data, specVersion}: PreviewPanePr
           )}
         </Button>
       </div>
-      <div className="flex flex-1 items-start justify-center p-8 overflow-auto">
-        <PreviewErrorBoundary resetKey={resetKey}>
-          <A2UIViewer
+
+      <div className="flex flex-1 items-start justify-center overflow-auto">
+        {previewMode === 'native' ? (
+          <div className="flex flex-1 items-start justify-center p-8 overflow-auto h-full">
+            <PreviewErrorBoundary resetKey={resetKey}>
+              <A2UIViewer
+                root={root}
+                components={components}
+                data={data}
+                specVersion={specVersion}
+                onAction={action => console.log('Widget action:', action)}
+              />
+            </PreviewErrorBoundary>
+          </div>
+        ) : (
+          <StorybookPreviewBridge
             root={root}
             components={components}
             data={data}
             specVersion={specVersion}
-            onAction={action => console.log('Widget action:', action)}
+            isDark={isDark}
+            onAction={action => console.log('Storybook widget action:', action)}
           />
-        </PreviewErrorBoundary>
+        )}
       </div>
     </div>
   );
