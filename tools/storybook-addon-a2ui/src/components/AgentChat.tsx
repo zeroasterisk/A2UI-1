@@ -15,8 +15,9 @@
  */
 
 import React, {useState} from 'react';
-import type {StorybookManagerApi, StorybookStoryData} from '../types.js';
+import type {A2UIMessage, A2UIWidget, StorybookManagerApi, StorybookStoryData} from '../types.js';
 import {transformStoryToA2UISchema} from '../lib/a2ui-transformer.js';
+import {buildA2UIWidget, buildV09Messages} from '../lib/scenario-engine.js';
 
 interface AgentChatProps {
   currentStory: StorybookStoryData;
@@ -27,7 +28,8 @@ interface ChatMessage {
   id: string;
   sender: 'user' | 'agent';
   text: string;
-  payload?: Record<string, unknown>;
+  widget?: A2UIWidget;
+  messages?: A2UIMessage[];
   timestamp: string;
 }
 
@@ -38,7 +40,7 @@ export const AgentChat: React.FC<AgentChatProps> = ({currentStory, api}) => {
     {
       id: 'welcome',
       sender: 'agent',
-      text: 'I am your A2UI component assistant. Prompt me to generate prop variations, edge-case states, or simulate real agent interactions.',
+      text: 'I am your A2UI Composer agent. Prompt me to generate component variations, simulate agent state transitions, or update your active Storybook story.',
       timestamp: new Date().toLocaleTimeString(),
     },
   ]);
@@ -68,12 +70,12 @@ export const AgentChat: React.FC<AgentChatProps> = ({currentStory, api}) => {
       >;
       const newArgs = {...currentArgs};
 
-      // Simple heuristic intent matcher for quick client-side demonstration
+      // Heuristic intent matcher simulating LLM tool call 'editWidget'
       const lower = userPrompt.toLowerCase();
       for (const [key, propDef] of Object.entries(schema.properties)) {
         if (propDef.type === 'string') {
           if (lower.includes('title') && key.toLowerCase().includes('title')) {
-            newArgs[key] = 'Updated via A2UI Agent';
+            newArgs[key] = 'Updated via A2UI Composer';
           } else if (lower.includes('label') && key.toLowerCase().includes('label')) {
             newArgs[key] = 'Agent Action';
           } else if (lower.includes('cancel') || lower.includes('delete')) {
@@ -101,19 +103,18 @@ export const AgentChat: React.FC<AgentChatProps> = ({currentStory, api}) => {
         }
       }
 
-      // Generate A2UI message
-      const a2uiPayload = {
-        surfaceUpdate: {
-          surfaceId: 'default',
-          components: [
-            {
-              id: `${schema.name.toLowerCase()}-instance-1`,
-              component: schema.name,
-              props: newArgs,
-            },
-          ],
-        },
-      };
+      // Generate A2UI Widget and Messages matching tools/composer
+      const catalogId =
+        currentStory.parameters?.a2ui?.catalogId ||
+        'https://a2ui.org/specification/v0_9/catalogs/basic/catalog.json';
+      const generatedWidget = buildA2UIWidget(schema.name, newArgs, 'agent-generated');
+      const generatedMessages = buildV09Messages(
+        'storybook-surface',
+        catalogId,
+        'root',
+        generatedWidget.components,
+        newArgs,
+      );
 
       // Hot-update Storybook canvas live
       api.updateStoryArgs(currentStory, newArgs);
@@ -121,8 +122,9 @@ export const AgentChat: React.FC<AgentChatProps> = ({currentStory, api}) => {
       const agentMsg: ChatMessage = {
         id: `agent-${Date.now()}`,
         sender: 'agent',
-        text: `Updated component props to reflect: "${userPrompt}". Storybook canvas has been updated.`,
-        payload: a2uiPayload,
+        text: `Applied updates for: "${userPrompt}". Storybook canvas has been hot-reloaded with the new widget definition.`,
+        widget: generatedWidget,
+        messages: generatedMessages,
         timestamp: new Date().toLocaleTimeString(),
       };
 
@@ -167,15 +169,20 @@ export const AgentChat: React.FC<AgentChatProps> = ({currentStory, api}) => {
             }}
           >
             <div style={{fontWeight: 600, fontSize: '11px', marginBottom: '4px', opacity: 0.8}}>
-              {msg.sender === 'user' ? 'You' : 'A2UI Agent'} • {msg.timestamp}
+              {msg.sender === 'user' ? 'You' : 'A2UI Composer Agent'} • {msg.timestamp}
             </div>
             <div>{msg.text}</div>
-            {msg.payload && (
+            {msg.widget && (
               <details style={{marginTop: '8px'}}>
                 <summary
-                  style={{cursor: 'pointer', fontSize: '11px', fontWeight: 500, color: '#0369a1'}}
+                  style={{
+                    cursor: 'pointer',
+                    fontSize: '11px',
+                    fontWeight: 500,
+                    color: '#0369a1',
+                  }}
                 >
-                  View A2UI JSON Payload
+                  View Generated Composer Widget
                 </summary>
                 <pre
                   style={{
@@ -189,7 +196,7 @@ export const AgentChat: React.FC<AgentChatProps> = ({currentStory, api}) => {
                     overflowX: 'auto',
                   }}
                 >
-                  {JSON.stringify(msg.payload, null, 2)}
+                  {JSON.stringify(msg.widget, null, 2)}
                 </pre>
               </details>
             )}

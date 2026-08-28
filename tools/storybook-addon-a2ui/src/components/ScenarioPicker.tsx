@@ -24,6 +24,8 @@ interface ScenarioPickerProps {
   onSelectScenario: (scenario: A2UIScenario) => void;
 }
 
+type PayloadViewMode = 'widget' | 'messages' | 'args';
+
 export const ScenarioPicker: React.FC<ScenarioPickerProps> = ({
   scenarios,
   currentStory,
@@ -31,7 +33,8 @@ export const ScenarioPicker: React.FC<ScenarioPickerProps> = ({
   onSelectScenario,
 }) => {
   const [activeScenarioId, setActiveScenarioId] = useState<string>('default');
-  const [inspectedPayload, setInspectedPayload] = useState<string | null>(null);
+  const [inspectedScenario, setInspectedScenario] = useState<A2UIScenario | null>(null);
+  const [viewMode, setViewMode] = useState<PayloadViewMode>('widget');
 
   const handleApply = (scenario: A2UIScenario) => {
     setActiveScenarioId(scenario.id);
@@ -39,15 +42,26 @@ export const ScenarioPicker: React.FC<ScenarioPickerProps> = ({
     api.updateStoryArgs(currentStory, scenario.args);
   };
 
+  const getInspectedContent = (scenario: A2UIScenario): string => {
+    if (viewMode === 'widget') {
+      return JSON.stringify(scenario.widget, null, 2);
+    }
+    if (viewMode === 'messages') {
+      return JSON.stringify(scenario.messages, null, 2);
+    }
+    return JSON.stringify(scenario.args, null, 2);
+  };
+
   return (
     <div style={{padding: '16px', display: 'flex', flexDirection: 'column', gap: '16px'}}>
       <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
         <div>
           <h4 style={{margin: '0 0 4px 0', fontSize: '14px', fontWeight: 600}}>
-            Generative UI Scenario Simulator
+            A2UI Composer Scenario Simulator
           </h4>
           <p style={{margin: 0, fontSize: '12px', color: '#6b7280'}}>
-            Drive the active Storybook component with simulated agent payloads and edge-case states.
+            Drive the active Storybook component using A2UI Composer widgets, data states, and
+            stream messages.
           </p>
         </div>
         <span
@@ -155,11 +169,7 @@ export const ScenarioPicker: React.FC<ScenarioPickerProps> = ({
                 <button
                   type="button"
                   onClick={() =>
-                    setInspectedPayload(
-                      inspectedPayload === scenario.id
-                        ? null
-                        : JSON.stringify(scenario.a2uiPayload, null, 2),
-                    )
+                    setInspectedScenario(inspectedScenario?.id === scenario.id ? null : scenario)
                   }
                   style={{
                     padding: '6px 10px',
@@ -170,7 +180,7 @@ export const ScenarioPicker: React.FC<ScenarioPickerProps> = ({
                     color: '#4b5563',
                     cursor: 'pointer',
                   }}
-                  title="Inspect A2UI JSON Payload"
+                  title="Inspect A2UI Payload"
                 >
                   JSON
                 </button>
@@ -180,22 +190,68 @@ export const ScenarioPicker: React.FC<ScenarioPickerProps> = ({
         })}
       </div>
 
-      {inspectedPayload && (
+      {inspectedScenario && (
         <div style={{marginTop: '12px'}}>
           <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: '6px',
+              marginBottom: '8px',
             }}
           >
-            <span style={{fontSize: '12px', fontWeight: 600, color: '#374151'}}>
-              Generated A2UI Payload (`surfaceUpdate`):
-            </span>
+            <div style={{display: 'flex', gap: '6px', alignItems: 'center'}}>
+              <span style={{fontSize: '12px', fontWeight: 600, color: '#374151'}}>Format:</span>
+              <button
+                type="button"
+                onClick={() => setViewMode('widget')}
+                style={{
+                  fontSize: '11px',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  border: viewMode === 'widget' ? '1px solid #2563eb' : '1px solid #d1d5db',
+                  backgroundColor: viewMode === 'widget' ? '#eff6ff' : '#ffffff',
+                  color: viewMode === 'widget' ? '#1d4ed8' : '#374151',
+                  cursor: 'pointer',
+                }}
+              >
+                Composer Widget
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('messages')}
+                style={{
+                  fontSize: '11px',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  border: viewMode === 'messages' ? '1px solid #2563eb' : '1px solid #d1d5db',
+                  backgroundColor: viewMode === 'messages' ? '#eff6ff' : '#ffffff',
+                  color: viewMode === 'messages' ? '#1d4ed8' : '#374151',
+                  cursor: 'pointer',
+                }}
+              >
+                A2UI Stream Messages
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode('args')}
+                style={{
+                  fontSize: '11px',
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  border: viewMode === 'args' ? '1px solid #2563eb' : '1px solid #d1d5db',
+                  backgroundColor: viewMode === 'args' ? '#eff6ff' : '#ffffff',
+                  color: viewMode === 'args' ? '#1d4ed8' : '#374151',
+                  cursor: 'pointer',
+                }}
+              >
+                Storybook Args
+              </button>
+            </div>
+
             <button
               type="button"
-              onClick={() => navigator.clipboard?.writeText(inspectedPayload)}
+              onClick={() => navigator.clipboard?.writeText(getInspectedContent(inspectedScenario))}
               style={{
                 fontSize: '11px',
                 padding: '2px 8px',
@@ -217,11 +273,11 @@ export const ScenarioPicker: React.FC<ScenarioPickerProps> = ({
               borderRadius: '6px',
               fontSize: '11px',
               fontFamily: 'monospace',
-              maxHeight: '200px',
+              maxHeight: '220px',
               overflow: 'auto',
             }}
           >
-            {inspectedPayload}
+            {getInspectedContent(inspectedScenario)}
           </pre>
         </div>
       )}

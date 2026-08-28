@@ -14,21 +14,85 @@
  * limitations under the License.
  */
 
-import type {A2UIScenario, StorybookStoryData} from '../types.js';
+import type {
+  A2UIComponent,
+  A2UIMessage,
+  A2UIScenario,
+  A2UIWidget,
+  StorybookStoryData,
+} from '../types.js';
 import {transformStoryToA2UISchema} from './a2ui-transformer.js';
 
-function wrapInA2UIPayload(componentName: string, args: Record<string, unknown>) {
-  return {
-    surfaceUpdate: {
-      surfaceId: 'default',
-      components: [
-        {
-          id: `${componentName.toLowerCase()}-instance-1`,
-          component: componentName,
-          props: args,
-        },
-      ],
+const DEFAULT_CATALOG_ID = 'https://a2ui.org/specification/v0_9/catalogs/basic/catalog.json';
+
+/**
+ * Creates standard A2UI v0.9 messages matching tools/composer / v09Viewer.tsx
+ */
+export function buildV09Messages(
+  surfaceId: string,
+  catalogId: string,
+  rootId: string,
+  components: A2UIComponent[],
+  data?: Record<string, unknown>,
+): A2UIMessage[] {
+  const messages: A2UIMessage[] = [
+    {
+      version: 'v0.9',
+      createSurface: {
+        surfaceId,
+        catalogId,
+      },
     },
+    {
+      version: 'v0.9',
+      updateComponents: {
+        surfaceId,
+        components: components.map(c => (c.id === rootId ? {...c, id: 'root'} : c)),
+      },
+    },
+  ];
+
+  if (data && Object.keys(data).length > 0) {
+    messages.push({
+      version: 'v0.9',
+      updateDataModel: {
+        surfaceId,
+        path: '/',
+        value: data,
+      },
+    });
+  }
+
+  return messages;
+}
+
+/**
+ * Builds an A2UI Widget representation matching tools/composer format
+ */
+export function buildA2UIWidget(
+  componentName: string,
+  args: Record<string, unknown>,
+  stateName = 'default',
+): A2UIWidget {
+  const rootId = 'root';
+  const componentInstance: A2UIComponent = {
+    id: rootId,
+    component: componentName,
+    ...args,
+  };
+
+  return {
+    id: `${componentName.toLowerCase()}-widget`,
+    name: componentName,
+    specVersion: '0.9',
+    root: rootId,
+    components: [componentInstance],
+    dataStates: [
+      {
+        name: stateName,
+        data: args,
+      },
+    ],
   };
 }
 
@@ -36,7 +100,6 @@ function wrapInA2UIPayload(componentName: string, args: Record<string, unknown>)
  * Automatically synthesizes testing scenarios from a Storybook story's argTypes and initial args
  */
 export function generateScenariosForStory(story: StorybookStoryData): A2UIScenario[] {
-  // If story authors provided custom A2UI scenarios in parameters, use those first
   if (story.parameters?.a2ui?.scenarios && story.parameters.a2ui.scenarios.length > 0) {
     return story.parameters.a2ui.scenarios;
   }
@@ -44,16 +107,25 @@ export function generateScenariosForStory(story: StorybookStoryData): A2UIScenar
   const schema = transformStoryToA2UISchema(story);
   const currentArgs = (story.args || story.initialArgs || {}) as Record<string, unknown>;
   const componentName = schema.name;
+  const catalogId = story.parameters?.a2ui?.catalogId || DEFAULT_CATALOG_ID;
   const scenarios: A2UIScenario[] = [];
 
   // 1. Default Scenario
+  const defaultWidget = buildA2UIWidget(componentName, currentArgs, 'default');
   scenarios.push({
     id: 'default',
     name: 'Default Baseline',
     description: 'Current story baseline arguments as authored in Storybook.',
     category: 'default',
     args: {...currentArgs},
-    a2uiPayload: wrapInA2UIPayload(componentName, currentArgs),
+    widget: defaultWidget,
+    messages: buildV09Messages(
+      'storybook-surface',
+      catalogId,
+      'root',
+      defaultWidget.components,
+      currentArgs,
+    ),
   });
 
   // 2. Stress Test Scenario (Long strings, large numbers)
@@ -67,13 +139,21 @@ export function generateScenariosForStory(story: StorybookStoryData): A2UIScenar
       stressArgs[propName] = 999999;
     }
   }
+  const stressWidget = buildA2UIWidget(componentName, stressArgs, 'stress-state');
   scenarios.push({
     id: 'stress-content',
     name: 'Stress Test: Long Content',
     description: 'Verifies typography wrapping, label truncation, and container overflow.',
     category: 'stress',
     args: stressArgs,
-    a2uiPayload: wrapInA2UIPayload(componentName, stressArgs),
+    widget: stressWidget,
+    messages: buildV09Messages(
+      'storybook-surface',
+      catalogId,
+      'root',
+      stressWidget.components,
+      stressArgs,
+    ),
   });
 
   // 3. Empty / Minimal State
@@ -87,13 +167,21 @@ export function generateScenariosForStory(story: StorybookStoryData): A2UIScenar
       emptyArgs[propName] = false;
     }
   }
+  const emptyWidget = buildA2UIWidget(componentName, emptyArgs, 'empty-state');
   scenarios.push({
     id: 'minimal-empty',
     name: 'Minimal / Empty State',
     description: 'Verifies behavior with empty strings, zero values, and false flags.',
     category: 'edge-case',
     args: emptyArgs,
-    a2uiPayload: wrapInA2UIPayload(componentName, emptyArgs),
+    widget: emptyWidget,
+    messages: buildV09Messages(
+      'storybook-surface',
+      catalogId,
+      'root',
+      emptyWidget.components,
+      emptyArgs,
+    ),
   });
 
   // 4. Alert / Warning / Error State
@@ -117,13 +205,21 @@ export function generateScenariosForStory(story: StorybookStoryData): A2UIScenar
   }
 
   if (hasAlertProp) {
+    const alertWidget = buildA2UIWidget(componentName, alertArgs, 'alert-state');
     scenarios.push({
       id: 'alert-state',
       name: 'Alert / Error State',
       description: 'Activates destructive variants, error badges, or disabled states.',
       category: 'warning',
       args: alertArgs,
-      a2uiPayload: wrapInA2UIPayload(componentName, alertArgs),
+      widget: alertWidget,
+      messages: buildV09Messages(
+        'storybook-surface',
+        catalogId,
+        'root',
+        alertWidget.components,
+        alertArgs,
+      ),
     });
   }
 

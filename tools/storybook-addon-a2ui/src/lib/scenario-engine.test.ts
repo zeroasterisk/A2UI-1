@@ -16,10 +16,49 @@
 
 import {describe, it} from 'node:test';
 import assert from 'node:assert/strict';
-import {generateScenariosForStory} from './scenario-engine.js';
+import {generateScenariosForStory, buildV09Messages, buildA2UIWidget} from './scenario-engine.js';
 import type {StorybookStoryData} from '../types.js';
 
 describe('Scenario Engine', () => {
+  it('builds valid v0.9 A2UI messages matching tools/composer', () => {
+    const messages = buildV09Messages(
+      'test-surface',
+      'https://a2ui.org/specification/v0_9/catalogs/basic/catalog.json',
+      'btn-1',
+      [{id: 'btn-1', component: 'Button', text: 'Submit'}],
+      {title: 'Test Data'},
+    );
+
+    assert.equal(messages.length, 3);
+    const m0 = messages[0];
+    const m1 = messages[1];
+    const m2 = messages[2];
+    if ('createSurface' in m0) {
+      assert.equal(m0.createSurface.surfaceId, 'test-surface');
+    } else {
+      assert.fail('Expected createSurface message');
+    }
+    if ('updateComponents' in m1) {
+      assert.equal(m1.updateComponents.components[0].id, 'root');
+    } else {
+      assert.fail('Expected updateComponents message');
+    }
+    if ('updateDataModel' in m2) {
+      assert.equal(m2.updateDataModel.path, '/');
+    } else {
+      assert.fail('Expected updateDataModel message');
+    }
+  });
+
+  it('builds an A2UI widget structure matching tools/composer', () => {
+    const widget = buildA2UIWidget('FlightCard', {flight: 'AA123', gate: 'B4'});
+    assert.equal(widget.name, 'FlightCard');
+    assert.equal(widget.specVersion, '0.9');
+    assert.equal(widget.root, 'root');
+    assert.equal(widget.components[0].component, 'FlightCard');
+    assert.equal(widget.dataStates[0].data.flight, 'AA123');
+  });
+
   it('automatically synthesizes default, stress, empty, and alert scenarios', () => {
     const mockStory: StorybookStoryData = {
       id: 'flight-card--default',
@@ -50,7 +89,13 @@ describe('Scenario Engine', () => {
     const defaultScenario = scenarios.find(s => s.id === 'default');
     assert.ok(defaultScenario);
     assert.equal(defaultScenario.args.flightNumber, 'AA 124');
-    assert.equal(defaultScenario.a2uiPayload.surfaceUpdate.components[0].component, 'FlightCard');
+    assert.equal(defaultScenario.widget.components[0].component, 'FlightCard');
+    const dm0 = defaultScenario.messages[0];
+    if ('createSurface' in dm0) {
+      assert.equal(dm0.createSurface.surfaceId, 'storybook-surface');
+    } else {
+      assert.fail('Expected createSurface message');
+    }
 
     // 2. Stress scenario
     const stressScenario = scenarios.find(s => s.id === 'stress-content');
@@ -83,12 +128,8 @@ describe('Scenario Engine', () => {
               description: 'Handcrafted test',
               category: 'custom',
               args: {foo: 'bar'},
-              a2uiPayload: {
-                surfaceUpdate: {
-                  surfaceId: 'default',
-                  components: [{id: '1', component: 'Custom', props: {foo: 'bar'}}],
-                },
-              },
+              widget: buildA2UIWidget('Custom', {foo: 'bar'}),
+              messages: [],
             },
           ],
         },
