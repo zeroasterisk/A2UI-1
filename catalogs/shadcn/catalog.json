@@ -1,0 +1,1864 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://a2ui.org/catalogs/shadcn/catalog.json",
+  "title": "A2UI ShadCN Component Catalog",
+  "description": "Unified catalog of 53 ShadCN UI components and controls for A2UI agents.",
+  "catalogId": "https://a2ui.org/catalogs/shadcn/catalog.json",
+  "components": {
+    "Accordion": {
+      "type": "object",
+      "description": "A vertically stacked set of interactive headings that each reveal a section of content.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "single",
+                "multiple"
+              ],
+              "default": "single"
+            },
+            "collapsible": {
+              "type": "boolean",
+              "default": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "trigger": {
+                    "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+                  },
+                  "content": {
+                    "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+                  }
+                },
+                "required": [
+                  "value",
+                  "trigger",
+                  "content"
+                ]
+              }
+            },
+            "component": {
+              "const": "Accordion"
+            }
+          },
+          "required": [
+            "component",
+            "items"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Alert": {
+      "type": "object",
+      "description": "Displays a callout for user attention with variant styles.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "variant": {
+              "type": "string",
+              "enum": [
+                "default",
+                "destructive"
+              ],
+              "default": "default"
+            },
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "component": {
+              "const": "Alert"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "AlertDialog": {
+      "type": "object",
+      "description": "A modal dialog that interrupts the user with important content and expects a response.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "actionText": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "cancelText": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "action": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/Action"
+            },
+            "component": {
+              "const": "AlertDialog"
+            }
+          },
+          "required": [
+            "component",
+            "title"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "AspectRatio": {
+      "type": "object",
+      "description": "Displays content within a desired ratio.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ratio": {
+              "type": "number",
+              "default": 1.7777777777777777
+            },
+            "child": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "AspectRatio"
+            }
+          },
+          "required": [
+            "component",
+            "child"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Avatar": {
+      "type": "object",
+      "description": "An image element with a fallback for representing the user.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "src": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "fallback": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "alt": {
+              "type": "string"
+            },
+            "component": {
+              "const": "Avatar"
+            }
+          },
+          "required": [
+            "component",
+            "fallback"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Badge": {
+      "type": "object",
+      "description": "Displays a small badge or status pill.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "text": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "default",
+                "secondary",
+                "destructive",
+                "outline"
+              ],
+              "default": "default"
+            },
+            "component": {
+              "const": "Badge"
+            }
+          },
+          "required": [
+            "component",
+            "text"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Breadcrumb": {
+      "type": "object",
+      "description": "Displays the path to the current resource using a hierarchy of links.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "label": {
+                    "type": "string"
+                  },
+                  "href": {
+                    "type": "string"
+                  },
+                  "isCurrent": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "label"
+                ]
+              }
+            },
+            "component": {
+              "const": "Breadcrumb"
+            }
+          },
+          "required": [
+            "component",
+            "items"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Button": {
+      "type": "object",
+      "description": "Displays a button or component that looks like a button.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "text": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "default",
+                "destructive",
+                "outline",
+                "secondary",
+                "ghost",
+                "link"
+              ],
+              "default": "default"
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "default",
+                "sm",
+                "lg",
+                "icon"
+              ],
+              "default": "default"
+            },
+            "disabled": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "action": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/Action"
+            },
+            "component": {
+              "const": "Button"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "ButtonGroup": {
+      "type": "object",
+      "description": "Groups closely related buttons together visually.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ],
+              "default": "horizontal"
+            },
+            "children": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ChildList"
+            },
+            "component": {
+              "const": "ButtonGroup"
+            }
+          },
+          "required": [
+            "component",
+            "children"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Calendar": {
+      "type": "object",
+      "description": "A date picker calendar component that allows users to select days or ranges.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "single",
+                "range",
+                "multiple"
+              ],
+              "default": "single"
+            },
+            "selected": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "component": {
+              "const": "Calendar"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Card": {
+      "type": "object",
+      "description": "Displays a card with header, title, description, content, and footer.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "footer": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Card"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Carousel": {
+      "type": "object",
+      "description": "A carousel with motion and swipe capabilities.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ],
+              "default": "horizontal"
+            },
+            "slides": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ChildList"
+            },
+            "component": {
+              "const": "Carousel"
+            }
+          },
+          "required": [
+            "component",
+            "slides"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Chart": {
+      "type": "object",
+      "description": "Displays charts and graphs (bar, line, pie, area) powered by Recharts.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "bar",
+                "line",
+                "area",
+                "pie"
+              ],
+              "default": "bar"
+            },
+            "data": {
+              "type": "array"
+            },
+            "config": {
+              "type": "object"
+            },
+            "component": {
+              "const": "Chart"
+            }
+          },
+          "required": [
+            "component",
+            "data"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Checkbox": {
+      "type": "object",
+      "description": "A control that allows the user to toggle between checked and not checked.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "label": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "checked": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "disabled": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "component": {
+              "const": "Checkbox"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Collapsible": {
+      "type": "object",
+      "description": "An interactive component which can be expanded or collapsed.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "open": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Collapsible"
+            }
+          },
+          "required": [
+            "component",
+            "content"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Command": {
+      "type": "object",
+      "description": "Fast, composable, unstyled command menu for searching and actions.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "placeholder": {
+              "type": "string"
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "heading": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "label": {
+                          "type": "string"
+                        },
+                        "shortcut": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "label"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "heading",
+                  "items"
+                ]
+              }
+            },
+            "component": {
+              "const": "Command"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "ContextMenu": {
+      "type": "object",
+      "description": "Displays a menu to the user \u2014 such as a set of actions or functions \u2014 triggered by right click.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "items": {
+              "type": "array"
+            },
+            "component": {
+              "const": "ContextMenu"
+            }
+          },
+          "required": [
+            "component",
+            "trigger"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Dialog": {
+      "type": "object",
+      "description": "A window overlaid on either the primary window or another dialog window.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "trigger": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Dialog"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Drawer": {
+      "type": "object",
+      "description": "A drawer modal that slides up from the bottom of the screen.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Drawer"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "DropdownMenu": {
+      "type": "object",
+      "description": "Displays a menu to the user triggered by a button.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "items": {
+              "type": "array"
+            },
+            "component": {
+              "const": "DropdownMenu"
+            }
+          },
+          "required": [
+            "component",
+            "trigger"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Empty": {
+      "type": "object",
+      "description": "Displays an empty state container with icon, title, description, and call to action.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "action": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Empty"
+            }
+          },
+          "required": [
+            "component",
+            "title"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Field": {
+      "type": "object",
+      "description": "A complete field wrapper providing label, input control, and helper/error descriptions.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "label": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "error": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Field"
+            }
+          },
+          "required": [
+            "component",
+            "content"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Form": {
+      "type": "object",
+      "description": "A form container with schema validation and field state management.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "children": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ChildList"
+            },
+            "onSubmit": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/Action"
+            },
+            "component": {
+              "const": "Form"
+            }
+          },
+          "required": [
+            "component",
+            "children"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "HoverCard": {
+      "type": "object",
+      "description": "For sighted users to preview content available behind a link.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "HoverCard"
+            }
+          },
+          "required": [
+            "component",
+            "trigger",
+            "content"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Input": {
+      "type": "object",
+      "description": "Displays a form input field or a component that looks like an input field.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "text",
+                "password",
+                "email",
+                "number",
+                "tel",
+                "url",
+                "search"
+              ],
+              "default": "text"
+            },
+            "placeholder": {
+              "type": "string"
+            },
+            "value": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "disabled": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "component": {
+              "const": "Input"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "InputGroup": {
+      "type": "object",
+      "description": "An input element grouped with prepended or appended icons, text, or buttons.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "placeholder": {
+              "type": "string"
+            },
+            "prefix": {
+              "type": "string"
+            },
+            "suffix": {
+              "type": "string"
+            },
+            "component": {
+              "const": "InputGroup"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "InputOTP": {
+      "type": "object",
+      "description": "Accessible one-time password / PIN component with copy paste and numeric inputs.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "maxLength": {
+              "type": "integer",
+              "default": 6
+            },
+            "value": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "component": {
+              "const": "InputOTP"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Item": {
+      "type": "object",
+      "description": "A generic list item container with media/icon, title, subtitle, and action slots.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "default",
+                "outline",
+                "muted"
+              ],
+              "default": "default"
+            },
+            "actions": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Item"
+            }
+          },
+          "required": [
+            "component",
+            "title"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Kbd": {
+      "type": "object",
+      "description": "Displays a keyboard key or shortcut combination.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "keys": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "component": {
+              "const": "Kbd"
+            }
+          },
+          "required": [
+            "component",
+            "keys"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Label": {
+      "type": "object",
+      "description": "Renders an accessible label associated with controls.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "text": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "htmlFor": {
+              "type": "string"
+            },
+            "component": {
+              "const": "Label"
+            }
+          },
+          "required": [
+            "component",
+            "text"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Menubar": {
+      "type": "object",
+      "description": "A visually persistent menu common in desktop applications for quick access to commands.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "menus": {
+              "type": "array"
+            },
+            "component": {
+              "const": "Menubar"
+            }
+          },
+          "required": [
+            "component",
+            "menus"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "NavigationMenu": {
+      "type": "object",
+      "description": "A collection of links for navigating websites.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array"
+            },
+            "component": {
+              "const": "NavigationMenu"
+            }
+          },
+          "required": [
+            "component",
+            "items"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Pagination": {
+      "type": "object",
+      "description": "Pagination with page navigation, next, previous and page number links.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "currentPage": {
+              "type": "integer",
+              "default": 1
+            },
+            "totalPages": {
+              "type": "integer",
+              "default": 1
+            },
+            "component": {
+              "const": "Pagination"
+            }
+          },
+          "required": [
+            "component",
+            "totalPages"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Popover": {
+      "type": "object",
+      "description": "Displays rich content in a portal, triggered by a button.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Popover"
+            }
+          },
+          "required": [
+            "component",
+            "trigger",
+            "content"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Progress": {
+      "type": "object",
+      "description": "Displays an indicator showing the completion progress of a task.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "value": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicNumber"
+            },
+            "max": {
+              "type": "number",
+              "default": 100
+            },
+            "component": {
+              "const": "Progress"
+            }
+          },
+          "required": [
+            "component",
+            "value"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "RadioGroup": {
+      "type": "object",
+      "description": "A set of checkable buttons\u2014known as radio buttons\u2014where no more than one can be checked.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value",
+                  "label"
+                ]
+              }
+            },
+            "value": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "component": {
+              "const": "RadioGroup"
+            }
+          },
+          "required": [
+            "component",
+            "options"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Resizable": {
+      "type": "object",
+      "description": "Accessible resizable panel groups and layouts with drag handles.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "direction": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ],
+              "default": "horizontal"
+            },
+            "panels": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ChildList"
+            },
+            "component": {
+              "const": "Resizable"
+            }
+          },
+          "required": [
+            "component",
+            "panels"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "ScrollArea": {
+      "type": "object",
+      "description": "Augments native scroll with custom cross-browser styling.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "maxHeight": {
+              "type": "string"
+            },
+            "component": {
+              "const": "ScrollArea"
+            }
+          },
+          "required": [
+            "component",
+            "content"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Select": {
+      "type": "object",
+      "description": "Displays a list of options for the user to pick from\u2014triggered by a button.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "placeholder": {
+              "type": "string"
+            },
+            "options": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value",
+                  "label"
+                ]
+              }
+            },
+            "value": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "component": {
+              "const": "Select"
+            }
+          },
+          "required": [
+            "component",
+            "options"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Separator": {
+      "type": "object",
+      "description": "Visually or semantically separates content.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "orientation": {
+              "type": "string",
+              "enum": [
+                "horizontal",
+                "vertical"
+              ],
+              "default": "horizontal"
+            },
+            "component": {
+              "const": "Separator"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Sheet": {
+      "type": "object",
+      "description": "Extends the Dialog component to display content that complements the screen from any side.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "side": {
+              "type": "string",
+              "enum": [
+                "top",
+                "right",
+                "bottom",
+                "left"
+              ],
+              "default": "right"
+            },
+            "title": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Sheet"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Sidebar": {
+      "type": "object",
+      "description": "A composable, collapsible navigation sidebar component.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "header": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "footer": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "component": {
+              "const": "Sidebar"
+            }
+          },
+          "required": [
+            "component",
+            "content"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Skeleton": {
+      "type": "object",
+      "description": "Use to show a placeholder while content is loading.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "string"
+            },
+            "height": {
+              "type": "string"
+            },
+            "circle": {
+              "type": "boolean",
+              "default": false
+            },
+            "component": {
+              "const": "Skeleton"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Slider": {
+      "type": "object",
+      "description": "An input where the user selects a value from within a given range.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number",
+              "default": 0
+            },
+            "max": {
+              "type": "number",
+              "default": 100
+            },
+            "step": {
+              "type": "number",
+              "default": 1
+            },
+            "value": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicNumber"
+            },
+            "component": {
+              "const": "Slider"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Sonner": {
+      "type": "object",
+      "description": "An opinionated toast component for feedback notifications.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "message": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "description": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "info",
+                "success",
+                "warning",
+                "error"
+              ],
+              "default": "info"
+            },
+            "component": {
+              "const": "Sonner"
+            }
+          },
+          "required": [
+            "component",
+            "message"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Spinner": {
+      "type": "object",
+      "description": "Indicates an active indeterminate loading state.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "string",
+              "enum": [
+                "sm",
+                "default",
+                "lg"
+              ],
+              "default": "default"
+            },
+            "component": {
+              "const": "Spinner"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Switch": {
+      "type": "object",
+      "description": "A control that allows the user to toggle between checked and not checked.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "checked": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "disabled": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "component": {
+              "const": "Switch"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Table": {
+      "type": "object",
+      "description": "A responsive table component for structured tabular data.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "headers": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicValue"
+                }
+              }
+            },
+            "caption": {
+              "type": "string"
+            },
+            "component": {
+              "const": "Table"
+            }
+          },
+          "required": [
+            "component",
+            "rows"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Tabs": {
+      "type": "object",
+      "description": "A set of layered sections of content\u2014known as tab panels\u2014that are displayed one at a time.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "defaultValue": {
+              "type": "string"
+            },
+            "tabs": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+                  }
+                },
+                "required": [
+                  "value",
+                  "label",
+                  "content"
+                ]
+              }
+            },
+            "component": {
+              "const": "Tabs"
+            }
+          },
+          "required": [
+            "component",
+            "tabs"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Textarea": {
+      "type": "object",
+      "description": "Displays a form textarea or a component that looks like a textarea.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "placeholder": {
+              "type": "string"
+            },
+            "value": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "disabled": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "rows": {
+              "type": "integer",
+              "default": 3
+            },
+            "component": {
+              "const": "Textarea"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Toggle": {
+      "type": "object",
+      "description": "A two-state button that can be either on or off.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "pressed": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicBoolean"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "default",
+                "outline"
+              ],
+              "default": "default"
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "default",
+                "sm",
+                "lg"
+              ],
+              "default": "default"
+            },
+            "label": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "component": {
+              "const": "Toggle"
+            }
+          },
+          "required": [
+            "component"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "ToggleGroup": {
+      "type": "object",
+      "description": "A set of two-state buttons that can be toggled on or off.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "single",
+                "multiple"
+              ],
+              "default": "single"
+            },
+            "variant": {
+              "type": "string",
+              "enum": [
+                "default",
+                "outline"
+              ],
+              "default": "default"
+            },
+            "size": {
+              "type": "string",
+              "enum": [
+                "default",
+                "sm",
+                "lg"
+              ],
+              "default": "default"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "value": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "value",
+                  "label"
+                ]
+              }
+            },
+            "component": {
+              "const": "ToggleGroup"
+            }
+          },
+          "required": [
+            "component",
+            "items"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    },
+    "Tooltip": {
+      "type": "object",
+      "description": "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+      "allOf": [
+        {
+          "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentCommon"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/ComponentId"
+            },
+            "content": {
+              "$ref": "https://a2ui.org/specification/v0_9/common_types.json#/$defs/DynamicString"
+            },
+            "component": {
+              "const": "Tooltip"
+            }
+          },
+          "required": [
+            "component",
+            "trigger",
+            "content"
+          ]
+        }
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

@@ -43,6 +43,10 @@ nav:
   - A2UI Composer ⭐:
       - composer/index.md
       - Composer Integration: composer/composer_renderer_integration.md
+  - Catalogs & Design Systems:
+      - Overview: catalogs/index.md
+      - ShadCN UI Catalog: catalogs/shadcn.md
+      - Bring Your Own Design System: catalogs/bring-your-own-design-system.md
   - Concepts:
       - Overview: concepts/overview.md
       - Glossary: concepts/glossary.md

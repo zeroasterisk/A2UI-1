@@ -79,10 +79,11 @@ For simplicity we recommend building catalogs that directly reflect a client's d
 
 ### Recommendations
 
-| Usecase                             | Recommendation                                                                 | Effort                         |
-| :---------------------------------- | :----------------------------------------------------------------------------- | :----------------------------- |
-| Adding A2UI to a mature frontend    | Define a catalog that mirrors your existing design system.                     | Medium                         |
-| Adding A2UI to a new/greenfield app | Start with Basic Catalog, then evolve into your own catalog as the app evolves | Low (assuming renderer exists) |
+| Usecase                             | Recommendation                                                                                                                               | Effort                         |
+| :---------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------- |
+| Adding A2UI to a mature frontend    | Define a catalog that mirrors your existing design system (see [Bring Your Own Design System](../catalogs/bring-your-own-design-system.md)). | Medium                         |
+| Building a modern full-featured app | Use a rich pre-built catalog like [ShadCN UI](../catalogs/shadcn.md) (53 components, Storybook).                                             | Low                            |
+| Protocol testing / minimal apps     | Start with Basic Catalog, then evolve into your own catalog as the app evolves.                                                              | Low (assuming renderer exists) |
 
 ## Building a Catalog
 

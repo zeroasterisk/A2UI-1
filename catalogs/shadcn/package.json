@@ -1,11 +1,12 @@
 {
-  "name": "@a2ui/storybook-shadcn-catalog",
+  "name": "@a2ui/catalog-shadcn",
   "private": true,
   "version": "0.1.0",
-  "description": "Storybook site implementing the full shadcn/ui component catalog as a standalone reference for the A2UI ambient design system.",
+  "description": "A2UI ShadCN Component Catalog — includes A2UI catalog schema, React component implementations, and interactive Storybook reference site.",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "generate:catalog": "python3 scripts/generate_catalog.py",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
